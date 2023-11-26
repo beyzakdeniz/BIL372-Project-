@@ -20,9 +20,10 @@
             <option value="idari">İdari</option>
         </select><br>
 
-        <div id="ogretmenContainer" style="display: none">
+        <br>
+        <div id="ogretmenContainer" style="display: none;">
             <label for="dersKodu">Ders Kodu:</label>
-            <select type="text" id="dersKodu" name="dersKodu" onchange="checkOtherOption()">
+            <select style="font-size: 14px; padding: 5px;" id="dersKodu"  name="dersKodu"  onchange="checkOtherOption()">
                 <option value="matematik">Matematik</option>
                 <option value="ingilizce">Ingilizce</option>
                 <option value="almanca">Almanca</option>
@@ -30,38 +31,16 @@
                 <option value="webTasarim">Web Tasarim</option>
                 <option value="robotik">Robotik</option>
                 <option value="diger">Diğer</option>
+    
             </select><br>
         </div>
-        <div id="digerDers" style="display: none;">
-            <label for="digerDersKodu">Diğer Ders Kodu:</label>
-            <textarea id="digerDersKodu" name="digerDersKodu"></textarea>
-        </div><br>
+
 
         <label for="calismaZamani">Çalışma Zamanı:</label>
-        <select type="text" id="calismaZamani"  name="calismaZamani" onchange="checkWorkerTime()">
+        <select type="text" id="calismaZamani"  name="calismaZamani">
             <option value="tamZamanli">Tam Zamanlı</option>
             <option value="yariZamanli">Yarı Zamanlı</option>
         </select><br><br>
-
-        <div id="yariZamanliContainer" style="display: none">
-            <label for="gun">Gün:</label>
-            <select style="font-size: 14px; padding: 5px;" type="text" id="gun" name="gun" required>
-                <option value="Pazartesi">Pazartesi</option>
-                <option value="Sali">Salı</option>
-                <option value="Çarşamba">Çarşamba</option>
-                <option value="Perşembe">Perşembe</option>
-                <option value="Cuma">Cuma</option>
-            </select><br>
-
-            <label for="saat">Saat:</label>
-            <select style="font-size: 14px; padding: 5px;" type="number" id="saat" name="saat" required>
-                <option value="8">08.00</option>
-                <option value="10">10.00</option>
-                <option value="12">12.00</option>
-                <option value="14">14.00</option>
-                <option value="16">16.00</option>
-            </select><br>
-        </div>
 
         <label for="tcKimlik">TC Kimliği:</label>
         <input type="number" id="tcKimlik" name="tcKimlik" required><br>
@@ -96,16 +75,6 @@
 
         <button type="submit" >Dersi ekle</button>
         <script>
-            function checkWorkerTime() {
-                const selectElement = document.getElementById('calismaZamani');
-                const yariZamanliContainer = document.getElementById('yariZamanliContainer');
-
-                if (selectElement.value === 'yariZamanli') {
-                    yariZamanliContainer.style.display = 'block';
-                } else {
-                    yariZamanliContainer.style.display = 'none';
-                }
-            }
 
             function checkTeacher() {
                 const selectElement = document.getElementById('meslek');
@@ -118,19 +87,6 @@
                 }
             }
 
-            function checkOtherOption() {
-            const selectElement = document.getElementById('dersKodu');
-            const otherOptionContainer = document.getElementById('digerDers');
-            const digerTextArea = document.getElementById('digerDersKodu');
-
-            if (selectElement.value === 'diger') {
-                otherOptionContainer.style.display = 'block';
-                digerTextArea.required = true;
-            } else {
-                otherOptionContainer.style.display = 'none';
-                digerTextArea.required = false;
-            }
-        }
         </script>
     
     </form>
