@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link style="vertical-align: middle;">  
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTE</title>
+</head>
+<body>
+    <form action="http://localhost:3006/api/students" method="POST">
+    <h1>Yeni Öğrenci Bilgileri</h1>   
+        <label for="dogumTarihi">Doğum Tarihi:</label>
+        <input type="date" id="dogumTarihi" name="dogumTarihi" required><br>
+
+        <label for="ad">Ad:</label>
+        <input type="text" id="ad" name="ad" required><br>
+
+        <label for="soyad">Soyad:</label>
+        <input type="text" id="soyad" name="soyad" required><br>
+        
+        <label>Cinsiyet:</label>
+        <div style="display: flex; align-items: center;">
+            <label for="kadin" style="margin-right: 10px;">Kadın:</label>
+            <input type="radio" id="kadin" name="cinsiyet" value="kadin">
+            
+            <label for="erkek" style="margin-right: 10px; margin-left: 10px;">Erkek:</label>
+            <input type="radio" id="erkek" name="cinsiyet" value="erkek">
+        </div>
+
+        <label for="gun">Müsait Olduğu Gün:</label>
+        <select style="font-size: 14px; padding: 5px;" type="text" id="gun" name="gun" required>
+            <option value="Pazartesi">Pazartesi</option>
+            <option value="Sali">Salı</option>
+            <option value="Çarşamba">Çarşamba</option>
+            <option value="Perşembe">Perşembe</option>
+            <option value="Cuma">Cuma</option>
+        </select><br>
+
+        <label for="saat">Müsait Olduğu Saat:</label>
+        <select style="font-size: 14px; padding: 5px;" type="number" id="saat" name="saat" required>
+            <option value="8">08.00</option>
+            <option value="10">10.00</option>
+            <option value="12">12.00</option>
+            <option value="14">14.00</option>
+            <option value="16">16.00</option>
+        </select><br>
+        
+    <h2>Yeni Veli Bilgileri</h2>
+        <label for="ad">Ad:</label>
+        <input type="text" id="ad" name="ad" required><br>
+
+        <label for="soyad">Soyad:</label>
+        <input type="text" id="soyad" name="soyad" required><br>
+       
+        <label for="mail">Mail:</label>
+        <input type="text" id="mail" name="mail" required><br>
+           
+        <label for="telefon">Telefon Numarası:</label>
+        <input type="text" id="telefonNo" name="telefonNo" required><br>
+        
+        <label for="kiminNesi">Yakınlık Durumu:</label>
+        <input type="text" id="kiminNesi" name="kiminNesi" required><br>
+        
+        <button type="submit" >Dersi ekle</button>
+
+    </form>              
+</body>
+</html>
