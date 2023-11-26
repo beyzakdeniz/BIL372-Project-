@@ -11,7 +11,7 @@
 			<li class="li"><a href="gider_ekle.html">Gider Ekle</a></li>
 			<li class="li"><a href="ogrencileri_goruntule.html">Öğrencileri Görüntüle</a></li>
 			<li class="li"><a href="velileri_goruntule.html">Velileri Görüntüle</a></li>
-			<li class="li"><a href="calisanlari_goruntule.html">Çalışanları Görüntüle</a></li>
+			<li class="li"><a href="calisan_goruntule.html">Çalışanları Görüntüle</a></li>
 			<li class="li"><a href="ders_programi_goruntule.html">Ders programı Görüntüle</a></li>
 			<li class="li"><a href="giderleri_goruntule.html">Giderleri Görüntüle</a></li>
 			<li class="li"><a href="rapor_goruntule.html">Rapor Görüntüle</a></li>
