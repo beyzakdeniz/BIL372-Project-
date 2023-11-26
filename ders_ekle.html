@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTE</title>
+</head>
+<body>
+    <form action="http://localhost:3006/api/students" method="POST">
+        <h1>Yeni Ders Bilgileri</h1>
+
+        <label for="dersAdi">Ders Adı:</label>
+        <select style="font-size: 14px; padding: 5px;" id="dersAdi"  name="dersAdi"  onchange="checkOtherOption()">
+            <option value="matematik">Matematik</option>
+            <option value="ingilizce">Ingilizce</option>
+            <option value="almanca">Almanca</option>
+            <option value="satranç">Satranç</option>
+            <option value="webTasarim">Web Tasarim</option>
+            <option value="robotik">Robotik</option>
+            <option value="diger">Diğer</option>
+        </select><br>
+        <div id="digerDers" style="display: none;">
+                <label for="digerDersKodu">Diğer Ders Kodu:</label>
+                <textarea id="digerDersKodu" name="digerDersKodu"></textarea>
+        </div><br>
+
+        <label for="dersKodu">Ders Kodu:</label>
+        <textarea style="font-size: 14px; width: 150px; height: 20px;" id="dersKodu" name="dersKodu"></textarea><br>     
+
+        <button type="submit" >Dersi ekle</button>
+    <script>
+        function checkOtherOption() {
+            const selectElement = document.getElementById('dersKodu');
+            const otherOptionContainer = document.getElementById('digerDers');
+            const digerTextArea = document.getElementById('digerDersKodu');
+
+            if (selectElement.value === 'diger') {
+                otherOptionContainer.style.display = 'block';
+                digerTextArea.required = true;
+            } else {
+                otherOptionContainer.style.display = 'none';
+                digerTextArea.required = false;
+            }
+        }
+
+        function showSelected() {
+            const selectElement = document.getElementById('dersKodu');
+            const gun = document.getElementById('gun');
+            const saat = document.getElementById('saat');
+            const digerTextArea = document.getElementById('digerDersKodu');
+            const selectedOption = selectElement.value === 'diger' ? digerTextarea.value : selectElement.value;
+
+            alert(selectedOption + ' ' + gun.value + ' günü saat ' + saat.value + ' olarak oluşturuldu');
+        }
+    </script>
+    </form>
+</body>
+</html>
