@@ -17,10 +17,10 @@
         <div>
             <?php
                 include "database.php";
-                $result = $db->query("SELECT ders_adi FROM ders_talep group by(ders_adi) having count(*) > 12);
+                $result = $db->query("SELECT ders_adi FROM ders_talep GROUP BY ders_adi HAVING COUNT(*) > 12");
 
                 while ($row = $result->fetch_assoc()) {
-                    echo . $row['ders_adi'] .;
+                    echo $row['ders_adi'];
                 }
                 
                 $db->close();
