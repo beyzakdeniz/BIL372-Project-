@@ -11,20 +11,21 @@
     <form action="http://localhost:3006/api/students" method="POST">
         <h1>Yeni Ders Bilgileri</h1>
 
-        <label for="dersAdi">Ders Adı:</label>
-        <select style="font-size: 14px; padding: 5px;" id="dersAdi"  name="dersAdi"  onchange="checkOtherOption()">
-            <option value="matematik">Matematik</option>
-            <option value="ingilizce">Ingilizce</option>
-            <option value="almanca">Almanca</option>
-            <option value="satranç">Satranç</option>
-            <option value="webTasarim">Web Tasarim</option>
-            <option value="robotik">Robotik</option>
-            <option value="diger">Diğer</option>
-        </select><br>
-        <div id="digerDers" style="display: none;">
-                <label for="digerDersKodu">Diğer Ders Kodu:</label>
-                <textarea id="digerDersKodu" name="digerDersKodu"></textarea>
-        </div><br>
+        <h1>Öğrenci Ders Talebi</h1>
+
+        <label for="dersler">Eklenebilecek Dersler:</label>
+        <div>
+            <?php
+                include "database.php";
+                $result = $db->query("SELECT ders_adi FROM ders_talep group by(ders_adi) having count(*) > 12);
+
+                while ($row = $result->fetch_assoc()) {
+                    echo . $row['ders_adi'] .;
+                }
+                
+                $db->close();
+            ?>
+        </div>
 
         <label for="dersKodu">Ders Kodu:</label>
         <textarea style="font-size: 14px; width: 150px; height: 20px;" id="dersKodu" name="dersKodu"></textarea><br>     
