@@ -9,7 +9,7 @@
     <title>MTE</title>
 </head>
 <body>
-    <form action="http://localhost:3006/api/students" method="POST">
+    <form action="ogrenci_ekle_back.php" method="POST">
     <h1>Yeni Öğrenci Bilgileri</h1>   
         <label for="dogumTarihi">Doğum Tarihi:</label>
         <input type="date" id="dogumTarihi" name="dogumTarihi" required><br>
@@ -31,16 +31,16 @@
 
         <label for="gun">Müsait Olduğu Gün:</label>
         <select style="font-size: 14px; padding: 5px;" type="text" id="gun" name="gun" required>
-            <option value="Pazartesi">Pazartesi</option>
-            <option value="Sali">Salı</option>
-            <option value="Çarşamba">Çarşamba</option>
-            <option value="Perşembe">Perşembe</option>
-            <option value="Cuma">Cuma</option>
+            <option value="1">Pazartesi</option>
+            <option value="2">Salı</option>
+            <option value="3">Çarşamba</option>
+            <option value="4">Perşembe</option>
+            <option value="5">Cuma</option>
         </select><br>
 
         <label for="saat">Müsait Olduğu Saat:</label>
         <select style="font-size: 14px; padding: 5px;" type="number" id="saat" name="saat" required>
-            <option value="8">08.00</option>
+            <option value="08">08.00</option>
             <option value="10">10.00</option>
             <option value="12">12.00</option>
             <option value="14">14.00</option>
@@ -63,7 +63,7 @@
         <label for="kiminNesi">Yakınlık Durumu:</label>
         <input type="text" id="kiminNesi" name="kiminNesi" required><br>
         
-        <button type="submit" >Dersi ekle</button>
+        <button type="submit" >Öğrenci ekle</button>
 
     </form>              
 </body>
