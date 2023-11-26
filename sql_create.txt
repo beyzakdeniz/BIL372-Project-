@@ -116,6 +116,7 @@ create table if not exists aktif (
 CREATE TABLE IF NOT EXISTS veli (
     v_id INT NOT NULL AUTO_INCREMENT,
     ogrenci_id int NOT NULL,
+    kimin_nesi varchar(20) not null,
     PRIMARY KEY (v_id),
     foreign key (ogrenci_id) references ogrenci(ogrenci_id)
 );
