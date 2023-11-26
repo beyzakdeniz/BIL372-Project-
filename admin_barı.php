@@ -7,14 +7,14 @@
 		echo'
 			<li class="li"><a href="admin_home.php">Okul Bilgisi</a></li>
 			<li class="li"><a href="ogrenci_ekle.html">Öğrenci Ekle</a></li>
-			<li class="li"><a href="calisan_ekle.php">Çalışan Ekle</a></li>
-			<li class="li"><a href="gider_ekle.php">Gider Ekle</a></li>
-			<li class="li"><a href="ogrencileri_goruntule.php">Öğrencileri Görüntüle</a></li>
-			<li class="li"><a href="velileri_goruntule.php">Velileri Görüntüle</a></li>
-			<li class="li"><a href="calisanlari_goruntule.php">Çalışanları Görüntüle</a></li>
-			<li class="li"><a href="ders_programi_goruntule.php">Ders programı Görüntüle</a></li>
-			<li class="li"><a href="giderleri_goruntule.php">Giderleri Görüntüle</a></li>
-			<li class="li"><a href="rapor_goruntule.php">Rapor Görüntüle</a></li>
+			<li class="li"><a href="calisan_ekle.html">Çalışan Ekle</a></li>
+			<li class="li"><a href="gider_ekle.html">Gider Ekle</a></li>
+			<li class="li"><a href="ogrencileri_goruntule.html">Öğrencileri Görüntüle</a></li>
+			<li class="li"><a href="velileri_goruntule.html">Velileri Görüntüle</a></li>
+			<li class="li"><a href="calisanlari_goruntule.html">Çalışanları Görüntüle</a></li>
+			<li class="li"><a href="ders_programi_goruntule.html">Ders programı Görüntüle</a></li>
+			<li class="li"><a href="giderleri_goruntule.html">Giderleri Görüntüle</a></li>
+			<li class="li"><a href="rapor_goruntule.html">Rapor Görüntüle</a></li>
 			<li class="li"><a href="logout.php">Logout</a></li>
 		
 		';
