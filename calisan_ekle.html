@@ -32,8 +32,12 @@
                 <option value="robotik">Robotik</option>
                 <option value="diger">Diğer</option>
     
-            </select><br>
+            </select>
         </div>
+        <div id="digerDers" style="display: none;">
+            <label for="digerDersKodu">Diğer Ders Kodu:</label>
+            <textarea id="digerDersKodu" name="digerDersKodu"></textarea>
+    </div><br>
 
 
         <label for="calismaZamani">Çalışma Zamanı:</label>
@@ -86,6 +90,20 @@
                     ogretmenContainer.style.display = 'none';
                 }
             }
+
+            function checkOtherOption() {
+            const selectElement = document.getElementById('dersKodu');
+            const otherOptionContainer = document.getElementById('digerDers');
+            const digerTextArea = document.getElementById('digerDersKodu');
+
+            if (selectElement.value === 'diger') {
+                otherOptionContainer.style.display = 'block';
+                digerTextArea.required = true;
+            } else {
+                otherOptionContainer.style.display = 'none';
+                digerTextArea.required = false;
+            }
+        }
 
         </script>
     
