@@ -1,0 +1,29 @@
+USE proje;
+
+-- Drop tables in reverse order to avoid foreign key constraints
+DROP TABLE IF EXISTS maasOdenir;
+DROP TABLE IF EXISTS ders_talep;
+DROP TABLE IF EXISTS ders_alir;
+DROP TABLE IF EXISTS gider;
+DROP TABLE IF EXISTS malzeme;
+DROP TABLE IF EXISTS veli_isim;
+DROP TABLE IF EXISTS veli_mail;
+DROP TABLE IF EXISTS veli_tel;
+DROP TABLE IF EXISTS veli;
+DROP TABLE IF EXISTS aktif;
+DROP TABLE IF EXISTS mezun;
+DROP TABLE IF EXISTS ogrenci;
+DROP TABLE IF EXISTS ogretmen;
+DROP TABLE IF EXISTS ders_saat;
+DROP TABLE IF EXISTS ders;
+DROP TABLE IF EXISTS temizlik;
+DROP TABLE IF EXISTS idari;
+DROP TABLE IF EXISTS fullTime;
+DROP TABLE IF EXISTS partTime;
+DROP TABLE IF EXISTS calisan_telefon;
+DROP TABLE IF EXISTS calisan_mail;
+DROP TABLE IF EXISTS calisan_tc;
+DROP TABLE IF EXISTS calisan;
+
+-- Drop the admin table at the end
+DROP TABLE IF EXISTS admin;
