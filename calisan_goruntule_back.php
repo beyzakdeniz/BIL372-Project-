@@ -40,15 +40,19 @@
         // Check if there are rows in the result set
         if ($result->num_rows > 0) {
             // Output data of each row
-            while ($row = $result->fetch_assoc()) {
-                echo "ID: " . $row["calisan_id"] . "<br>";
-                echo "İsim: " . $row["isim"] . "<br>";
-                echo "Soyisim: " . $row["soyisim"] . "<br>";
-                echo "Cinsiyet: " . $row["cinsiyet"] . "<br>";
-                echo "Doğum Tarihi: " . $row["dogum_tarihi"] . "<br>";
-                // Add more fields as needed
-                echo "<hr>";
-            }
+           echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>İsim</th><th>Soyisim</th><th>Cinsiyet</th><th>Doğum Tarihi</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row["calisan_id"] . "</td>";
+            echo "<td>" . $row["isim"] . "</td>";
+            echo "<td>" . $row["soyisim"] . "</td>";
+            echo "<td>" . $row["cinsiyet"] . "</td>";
+            echo "<td>" . $row["dogum_tarihi"] . "</td>";
+            // Add more fields as needed
+            echo "</tr>";
+        }
+        echo "</table>";
         } else {
             echo "No results found";
         }
