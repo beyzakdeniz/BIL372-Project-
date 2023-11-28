@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 INSERT INTO `admin` (`AID`, `ANAME`, `APASS`) VALUES
 (1, 'admin', '1234');
 
-CREATE TABLE calisan (
+CREATE TABLE IF NOT EXISTS calisan (
     calisan_id INT NOT NULL AUTO_INCREMENT,
     cinsiyet char NOT NULL,
     dogum_tarihi DATE NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS ogretmen (
 
 CREATE TABLE IF NOT EXISTS ogrenci (
     ogrenci_id INT NOT NULL AUTO_INCREMENT,
-    gender CHAR,
+    cinsiyet CHAR,
     isim VARCHAR(20) NOT NULL,
     soyisim VARCHAR(20) NOT NULL,
     dogum_tarihi DATE NOT NULL,
@@ -159,9 +159,15 @@ CREATE TABLE IF NOT EXISTS ders_alir (
     FOREIGN KEY (ders_kodu) REFERENCES ders(ders_kodu)
 );
 
+CREATE VIEW ders_acilacak AS
+SELECT d.ders_adi
+FROM ders_talep dt join ders d on dt.ders_kodu = d.ders_kodu 
+group BY(d.ders_adi)
+HAVING COUNT(d.ders_adi) > 12;
+
 CREATE TABLE IF NOT EXISTS ders_talep (
     ogrenci_id INT NOT NULL,
-    ders_kodu CHAR(3) NOT NULL,
+    ders_adi VARCHAR(20) NOT NULL,
     FOREIGN KEY (ogrenci_id) REFERENCES ogrenci(ogrenci_id)
 );
 

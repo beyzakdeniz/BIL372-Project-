@@ -41,13 +41,18 @@
 
             // Öğretmen Information
             if ($meslek == "ogretmen") {
+
                 $dersKodu = $_POST["dersKodu"];
+                $insertDersQuery = "INSERT INTO ders (ders_kodu, ders_adi) 
+                                        VALUES ('$dersKodu', NULL)";
 
                 if ($dersKodu == "diger") {
                     $digerDersKodu = $_POST["digerDersKodu"];
-                    // Handle the case when the selected subject is "Diğer"
-                    // Insert $digerDersKodu into the appropriate table
+                    $insertDersQuery = "INSERT INTO ders (ders_kodu, ders_adi) 
+                                        VALUES ('$digerDersKodu', NULL)";
                 }
+                    
+                $db->query($insertDersQuery);
 
                 $insertOgretmenQuery = "INSERT INTO ogretmen (calisan_id, ders_kodu) 
                                         VALUES ('$calisan_id', '$dersKodu')";
@@ -70,7 +75,7 @@
                 foreach ($schedule as $saat => $gunler) {
                     foreach ($gunler as $gun => $value) {
                         if ($value) {
-                            $insertScheduleQuery = "INSERT INTO partTime (ogrenci_id, musaitlik_id) 
+                            $insertScheduleQuery = "INSERT INTO partTime (calisan_id, musaitlik_id) 
                                                 VALUES ('$calisan_id', '$value')";
                             $db->query($insertScheduleQuery);
                         }
