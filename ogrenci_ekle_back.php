@@ -46,7 +46,7 @@
             }
             echo "Student record added successfully";
         } else {
-            echo "Error: AAAAAAAA" . $sqlStudent . "<br>" . $db->error;
+            echo "Error: " . $sqlStudent . "<br>" . $db->error;
         }
 
         // Insert parent information into the database (replace table and column names)

@@ -22,39 +22,60 @@
         $telefonNo = $db->real_escape_string($_POST['telefonNo']);
         $today = date("Y-m-d");
 
-        // Additional fields for teachers
-        $dersKodu = isset($_POST["dersKodu"]) ? $_POST["dersKodu"] : null;
-
         // Insert into the calisan table
         $sql = "INSERT INTO calisan (cinsiyet, dogum_tarihi, isim, soyisim)
-        VALUES ('$cinsiyet', '$dogumTarihi', '$isim', '$soyisim')";
-        $db->query($sql);
-
-        // Get the last inserted ID
-        $calisan_id = $db->insert_id;
-
-        // Insert into the appropriate table based on the selected occupation
-        if ($meslek === 'temizlikPersoneli') {
-            $sql = "INSERT INTO temizlik (calisan_id) VALUES ('$calisan_id')";
-        } elseif ($meslek === 'ogretmen') {
-            $sql = "INSERT INTO ders (ders_kodu) VALUES ('$dersKodu')";
-        } elseif ($meslek === 'idari') {
-            $sql = "INSERT INTO idari (calisan_id) VALUES ('$calisan_id')";
-        }
+                VALUES ('$cinsiyet', '$dogumTarihi', '$isim', '$soyisim')";
 
         // Insert additional information based on the selected working time
         if ($db->query($sql) === TRUE) {
 
-            // Insert into other related tables based on the selected occupation
-            if ($meslek === 'ogretmen') {
-                $sql = "INSERT INTO ogretmen (calisan_id, ders_kodu) VALUES ('$calisan_id','$dersKodu')";
-                $db->query($sql);
+            // Get the last inserted ID
+            $calisan_id = $db->insert_id;
+
+            // Temizlik Personeli Information
+            if ($meslek == "temizlikPersoneli") {
+                $insertTemizlikQuery = "INSERT INTO temizlik (calisan_id) 
+                                        VALUES ('$calisanId')";
+                $db->query($insertTemizlikQuery);
+            }
+
+            // Öğretmen Information
+            if ($meslek == "ogretmen") {
+                $dersKodu = $_POST["dersKodu"];
+
+                if ($dersKodu == "diger") {
+                    $digerDersKodu = $_POST["digerDersKodu"];
+                    // Handle the case when the selected subject is "Diğer"
+                    // Insert $digerDersKodu into the appropriate table
+                }
+
+                $insertOgretmenQuery = "INSERT INTO ogretmen (calisan_id, ders_kodu) 
+                                        VALUES ('$calisanId', '$dersKodu')";
+                $db->query($insertOgretmenQuery);
+            }
+
+            // İdari Information
+            if ($meslek == "idari") {
+                $insertIdariQuery = "INSERT INTO idari (calisan_id) 
+                                    VALUES ('$calisanId')";
+                $db->query($insertIdariQuery);
             }
 
             // Insert additional information based on the selected working time
             if ($calismaZamani === 'yariZamanli') {
-                $sql = "INSERT INTO partTime (calisan_id, musaitlik_id) VALUES ('$calisan_id', NULL)";
-                $db->query($sql);
+                // Schedule Information
+                $schedule = $_POST["schedule"];
+
+                // Insert Schedule Information
+                foreach ($schedule as $saat => $gunler) {
+                    foreach ($gunler as $gun => $value) {
+                        if ($value) {
+                            $insertScheduleQuery = "INSERT INTO partTime (ogrenci_id, musaitlik_id) 
+                                                VALUES ('$calisan_id', '$value')";
+                            $db->query($insertScheduleQuery);
+                        }
+                    }
+                }
             }
 
             // Insert into the calisan_tc, calisan_mail, calisan_telefon tables
