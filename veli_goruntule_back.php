@@ -16,8 +16,7 @@
         if ($veliAdi === '*') {
             // Retrieve all employees if '*' is entered
             $sql = "SELECT v.v_id, vi.isim , vi.soyisim ,v.ogrenci_id , v.kimin_nesi , vt.tel_no, vm.mail 
-            FROM veli v JOIN veli_isim vi ON v.v_id = vi.v_id JOIN veli_mail vm ON vm.v_id = vi.v_id JOIN  veli_tel vt ON vt.v_id = vm.v_id
-            WHERE vi.isim LIKE ? ";
+            FROM veli v JOIN veli_isim vi ON v.v_id = vi.v_id JOIN veli_mail vm ON vm.v_id = vi.v_id JOIN  veli_tel vt ON vt.v_id = vm.v_id";
         } else {
             // Retrieve employees based on the entered name
             $sql = "SELECT v.v_id, vi.isim , vi.soyisim ,v.ogrenci_id , v.kimin_nesi , vt.tel_no, vm.mail 
