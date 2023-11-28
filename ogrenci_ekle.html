@@ -9,7 +9,7 @@
     <title>MTE</title>
 </head>
 <body>
-    <form action="ogrenci_ekle_back.php" method="POST">
+    <form action="http://localhost:3006/api/students" method="POST">
     <h1>Yeni Öğrenci Bilgileri</h1>   
         <label for="dogumTarihi">Doğum Tarihi:</label>
         <input type="date" id="dogumTarihi" name="dogumTarihi" required><br>
@@ -29,31 +29,64 @@
             <input type="radio" id="erkek" name="cinsiyet" value="erkek">
         </div>
 
-        <label for="gun">Müsait Olduğu Gün:</label>
-        <select style="font-size: 14px; padding: 5px;" type="text" id="gun" name="gun" required>
-            <option value="1">Pazartesi</option>
-            <option value="2">Salı</option>
-            <option value="3">Çarşamba</option>
-            <option value="4">Perşembe</option>
-            <option value="5">Cuma</option>
-        </select><br>
-
-        <label for="saat">Müsait Olduğu Saat:</label>
-        <select style="font-size: 14px; padding: 5px;" type="number" id="saat" name="saat" required>
-            <option value="08">08.00</option>
-            <option value="10">10.00</option>
-            <option value="12">12.00</option>
-            <option value="14">14.00</option>
-            <option value="16">16.00</option>
-        </select><br>
+        <label for="musaitlik">Müsaitlik Bilgileri</label>
+        <table border="1">
+            <tr>
+                <th></th>
+                <th>Pazartesi</th>
+                <th>Sali</th>
+                <th>Carsamba</th>
+                <th>Persembe</th>
+                <th>Cuma</th>
+            </tr>
+            <tr>
+                <td>08:00</td>
+                <td><input type="radio" name="schedule[08:00][Pazartesi]" value="108"></td>
+                <td><input type="radio" name="schedule[08:00][Sali]" value="208"></td>
+                <td><input type="radio" name="schedule[08:00][Carsamba]" value="308"></td>
+                <td><input type="radio" name="schedule[08:00][Persembe]" value="408"></td>
+                <td><input type="radio" name="schedule[08:00][Cuma]" value="508"></td>
+            </tr>
+            <tr>
+                <td>10:00</td>
+                <td><input type="radio" name="schedule[10:00][Pazartesi]" value="110"></td>
+                <td><input type="radio" name="schedule[10:00][Sali]" value="210"></td>
+                <td><input type="radio" name="schedule[10:00][Carsamba]" value="310"></td>
+                <td><input type="radio" name="schedule[10:00][Persembe]" value="410"></td>
+                <td><input type="radio" name="schedule[10:00][Cuma]" value="510"></td>
+            </tr>
+            <tr>
+                <td>12:00</td>
+                <td><input type="radio" name="schedule[12:00][Pazartesi]" value="112"></td>
+                <td><input type="radio" name="schedule[12:00][Sali]" value="212"></td>
+                <td><input type="radio" name="schedule[12:00][Carsamba]" value="312"></td>
+                <td><input type="radio" name="schedule[12:00][Persembe]" value="412"></td>
+                <td><input type="radio" name="schedule[12:00][Cuma]" value="512"></td>
+            </tr>       
+            <tr>
+                <td>14:00</td>
+                <td><input type="radio" name="schedule[14:00][Pazartesi]" value="114"></td>
+                <td><input type="radio" name="schedule[14:00][Sali]" value="214"></td>
+                <td><input type="radio" name="schedule[14:00][Carsamba]" value="314"></td>
+                <td><input type="radio" name="schedule[14:00][Persembe]" value="414"></td>
+                <td><input type="radio" name="schedule[14:00][Cuma]" value="514"></td>
+            </tr>
+            <tr>
+                <td>16:00</td>
+                <td><input type="radio" name="schedule[16:00][Pazartesi]" value="116"></td>
+                <td><input type="radio" name="schedule[16:00][Sali]" value="216"></td>
+                <td><input type="radio" name="schedule[16:00][Carsamba]" value="316"></td>
+                <td><input type="radio" name="schedule[16:00][Persembe]" value="416"></td>
+                <td><input type="radio" name="schedule[16:00][Cuma]" value="516"></td>
+            </tr>
+        </table><br>
         
     <h2>Yeni Veli Bilgileri</h2>
-        <label for="veli_ad">Ad:</label>
-        <input type="text" id="veli_ad" name="veli_ad" required><br>
+        <label for="ad">Ad:</label>
+        <input type="text" id="ad" name="ad" required><br>
 
-        <label for="veli_soyad">Soyad:</label>
-        <input type="text" id="veli_soyad" name="veli_soyad" required><br>
-
+        <label for="soyad">Soyad:</label>
+        <input type="text" id="soyad" name="soyad" required><br>
        
         <label for="mail">Mail:</label>
         <input type="text" id="mail" name="mail" required><br>
@@ -64,7 +97,7 @@
         <label for="kiminNesi">Yakınlık Durumu:</label>
         <input type="text" id="kiminNesi" name="kiminNesi" required><br>
         
-        <button type="submit" >Öğrenci ekle</button>
+        <button type="submit" >Dersi ekle</button>
 
     </form>              
 </body>
