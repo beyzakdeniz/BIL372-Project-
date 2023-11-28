@@ -35,7 +35,7 @@
             // Temizlik Personeli Information
             if ($meslek == "temizlikPersoneli") {
                 $insertTemizlikQuery = "INSERT INTO temizlik (calisan_id) 
-                                        VALUES ('$calisanId')";
+                                        VALUES ('$calisan_id')";
                 $db->query($insertTemizlikQuery);
             }
 
@@ -50,14 +50,14 @@
                 }
 
                 $insertOgretmenQuery = "INSERT INTO ogretmen (calisan_id, ders_kodu) 
-                                        VALUES ('$calisanId', '$dersKodu')";
+                                        VALUES ('$calisan_id', '$dersKodu')";
                 $db->query($insertOgretmenQuery);
             }
 
             // İdari Information
             if ($meslek == "idari") {
                 $insertIdariQuery = "INSERT INTO idari (calisan_id) 
-                                    VALUES ('$calisanId')";
+                                    VALUES ('$calisan_id')";
                 $db->query($insertIdariQuery);
             }
 
