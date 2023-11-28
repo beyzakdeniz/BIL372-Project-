@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<title>School Management System - Mahmut Tuncer</title>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="BIL372-Project-/style.css">
 	</head>
 	<body class="back">
 
