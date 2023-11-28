@@ -1,61 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="C:\Users\suyil\OneDrive\Pictures\favicon.jpg">
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTE</title>
 </head>
 <body>
-    <form action="http://localhost:3006/api/students" method="POST">
-        <h1>Talep Edilen Ders</h1>
+    <form action="ders_ekle_back.php" method="POST">
+        <h1>Ders Talebi</h1>
 
-        <label for="dersKodu">Ders Kodu:</label>
-        <select style="font-size: 14px; padding: 5px;" id="dersKodu"  name="dersKodu"  onchange="checkOtherOption()">
-            <option value="Matematik">Matematik</option>
-            <option value="Ingilizce">Ingilizce</option>
-            <option value="Almanca">Almanca</option>
-            <option value="Satranç">Satranç</option>
-            <option value="WebTasarim">Web Tasarim</option>
-            <option value="Robotik">Robotik</option>
-            <option value="other">Other</option>
-
-        </select><br>
-
-
-        <div id="digerDers" style="display: none;">
-                <label for="digerDersKodu">Diğer Ders Kodu:</label>
-                <textarea id="digerDersKodu" name="digerDersKodu"></textarea>
-        </div><br>
-
-        <button type="submit">Dersi ekle</button>        
-     <script>
-            function checkOtherOption() {
-                const selectElement = document.getElementById('dersKodu');
-                const otherOptionContainer = document.getElementById('digerDers');
-                const otherFruitTextarea = document.getElementById('digerDersKodut');
+            <label for="dersAdi">Ders Adı :</label>
+            <select style="font-size: 14px; padding: 5px;" id="dersAdi"  name="dersAdi"  onchange="checkOtherOption()">
+                <option value="matematik">Matematik</option>
+                <option value="ingilizce">Ingilizce</option>
+                <option value="almanca">Almanca</option>
+                <option value="satranç">Satranç</option>
+                <option value="webTasarim">Web Tasarım</option>
+                <option value="robotik">Robotik</option>
+                <option value="diger">Diğer</option>
     
-                if (selectElement.value === 'other') {
-                    otherOptionContainer.style.display = 'block';
-                    otherFruitTextarea.required = true;
-                } else {
-                    otherOptionContainer.style.display = 'none';
-                    otherFruitTextarea.required = false;
-                }
-            }
-    
-            function showSelected() {
-                const selectElement = document.getElementById('dersKodu');
-                const gun = document.getElementById('gun');
-                const saat = document.getElementById('saat');
-                const otherFruitTextarea = document.getElementById('digerDersKodu');
-                const selectedOption = selectElement.value === 'other' ? otherFruitTextarea.value : selectElement.value;
-    
-                alert(selectedOption + ' ' + gun.value + ' günü saat ' + saat.value + ' olarak oluşturuldu');
-            }
-        </script>
+            </select><br><br>
+            <div id="digerDersAdi" style="display: none;">
+                <label for="digerDersAdi">Diğer Ders Adı:</label>
+                <textarea style="font-size: 14px; width: 150px; height: 20px;" id="digerDersAdi" name="digerDersAdi"></textarea>
+            </div><br>
+            
+            <br>
+           <button type="submit" >Dersi ekle</button>
+    <script>
+
+    function checkOtherOption() {
+        const selectElement = document.getElementById('dersAdi');
+        const otherOptionContainer = document.getElementById('digerDersAdi');
+        const digerTextArea = document.getElementById('digerDersAdi');
+
+        if (selectElement.value === 'diger') {
+            otherOptionContainer.style.display = 'block';
+            digerTextArea.required = true;
+        } else {
+            otherOptionContainer.style.display = 'none';
+            digerTextArea.required = false;
+        }
+    }
+
+
+    </script>
     </form>
-
 </body>
 </html>

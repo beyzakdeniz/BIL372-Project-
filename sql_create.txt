@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS ogretmen (
 
 CREATE TABLE IF NOT EXISTS ogrenci (
     ogrenci_id INT NOT NULL AUTO_INCREMENT,
-    gender CHAR,
+    cinsiyet CHAR,
     isim VARCHAR(20) NOT NULL,
     soyisim VARCHAR(20) NOT NULL,
     dogum_tarihi DATE NOT NULL,
