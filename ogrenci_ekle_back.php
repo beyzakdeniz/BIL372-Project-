@@ -15,8 +15,9 @@
         $ad = $_POST["ad"];
         $soyad = $_POST["soyad"];
         $cinsiyet = $_POST["cinsiyet"];
-        $gun = $_POST["gun"];
-        $saat = $_POST["saat"];
+
+        // Schedule Information
+        $schedule = $_POST["schedule"];
         
 
         // Retrieve parent information from the form
@@ -33,15 +34,19 @@
         if ($db->query($sqlStudent) === TRUE) {
             $studentId = $db->insert_id;
 
-            // Insert student availability information into the database (replace table and column names)
-            $sqlAvailability = "INSERT INTO aktif (ogrenci_id, musaitlik_id) 
-                                VALUES ('$studentId', '$gun$saat')";
-            
-            $db->query($sqlAvailability);
-
+            // Insert Schedule Information
+            foreach ($schedule as $saat => $gunler) {
+                foreach ($gunler as $gun => $value) {
+                    if ($value) {
+                        $insertScheduleQuery = "INSERT INTO aktif (ogrenci_id, musaitlik_id) 
+                                            VALUES ('$studentId', '$value')";
+                        $db->query($insertScheduleQuery);
+                    }
+                }
+            }
             echo "Student record added successfully";
         } else {
-            echo "Error: " . $sqlStudent . "<br>" . $db->error;
+            echo "Error: AAAAAAAA" . $sqlStudent . "<br>" . $db->error;
         }
 
         // Insert parent information into the database (replace table and column names)

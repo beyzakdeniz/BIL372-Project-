@@ -67,7 +67,6 @@ CREATE TABLE IF NOT EXISTS temizlik (
     primary key(temizlik_id)
 );
 
-
 CREATE TABLE IF NOT EXISTS ders (
     ders_kodu CHAR(3) NOT NULL,
     ders_adi VARCHAR(15),
@@ -111,7 +110,6 @@ create table if not exists aktif (
    foreign key (ogrenci_id) references ogrenci(ogrenci_id)
 );
    
-   
 CREATE TABLE IF NOT EXISTS veli (
     v_id INT NOT NULL AUTO_INCREMENT,
     ogrenci_id int NOT NULL,
@@ -154,13 +152,12 @@ CREATE TABLE IF NOT EXISTS gider (
     harcama_turu VARCHAR(20) NOT NULL
 );
 
-
 CREATE TABLE IF NOT EXISTS ders_alir (
     ogrenci_id INT NOT NULL,
     ders_kodu CHAR(3) NOT NULL,
     FOREIGN KEY (ogrenci_id) REFERENCES ogrenci(ogrenci_id),
     FOREIGN KEY (ders_kodu) REFERENCES ders(ders_kodu)
-   );
+);
 
 CREATE TABLE IF NOT EXISTS ders_talep (
     ogrenci_id INT NOT NULL,
@@ -174,7 +171,7 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
     maas int not null,
     foreign KEY (calisan_id) references calisan(calisan_id),
     foreign KEY (gider_id) references gider(gider_id)
-    );
+);
 
 
 
