@@ -46,6 +46,6 @@ button:hover {
 /* İsteğe bağlı: Küçük ekranlarda formu daha iyi hale getirme */
 @media screen and (max-width: 600px) {
     form {
-        width: 80%;
-    }
+        width: 80%;
+    }
 }

@@ -14,7 +14,7 @@
 		<title>Mahmut Tuncer</title>
 	    <link rel="icon" type="image/x-icon" href="\favicon.jpg">
 
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
 	
