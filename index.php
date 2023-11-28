@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<title>School Management System - Mahmut Tuncer</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body class="back">
 		<?php include"hesap_secim_barı.php";?>
