@@ -1,10 +1,10 @@
-git status
+git status (yapılacak güncelleme olup olmadığını görmek için)
 
 git add .
 
 git commit -m "dummy asd.txt file added"
 
-git pull
+git pull (arkadaşların güncellemelerini alır)
 
-git push
+git push (senin commitlerin github'a yüklenir) (push'lamadan önce mutlaka pull yap)
 
