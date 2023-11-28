@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body class="back">
-		<?php include"navbar.php";?>
+		<?php include"hesap_secim_barı.php";?>
 		<img src="img/b1.jpg" width="800">
 		
 		<div class="login">
