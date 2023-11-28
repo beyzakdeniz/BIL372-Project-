@@ -20,7 +20,6 @@
         $results = $db->query($query);
     } elseif ($raporTuru == 'haftalik') {
         // Haftalık rapor sorgusu
-        // Not: Bu kısım, veritabanınızın yapısına bağlı olarak değişebilir
         $query = "SELECT * FROM gider WHERE WEEK(tarih) = WEEK('$tarih')";
         // Sorguyu çalıştır
         $results = $db->query($query);
