@@ -1,8 +1,6 @@
 git status (yapılacak güncelleme olup olmadığını görmek için)
 
-git add .
-
-git commit -m "dummy asd.txt file added"
+git commit -a -m "guncellendi"
 
 git pull (arkadaşların güncellemelerini alır)
 
