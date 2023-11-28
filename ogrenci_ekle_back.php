@@ -28,7 +28,7 @@
         $kiminNesi = $_POST["kiminNesi"];
 
         // Insert student information into the database (replace table and column names)
-        $sqlStudent = "INSERT INTO ogrenci (dogum_tarihi, isim, soyisim, gender) 
+        $sqlStudent = "INSERT INTO ogrenci (dogum_tarihi, isim, soyisim, cinsiyet) 
                     VALUES ('$dogumTarihi', '$ad', '$soyad', '$cinsiyet')";
 
         if ($db->query($sqlStudent) === TRUE) {
