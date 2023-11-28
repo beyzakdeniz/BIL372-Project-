@@ -6,8 +6,5 @@ git commit -m "dummy asd.txt file added"
 
 git pull
 
-git status
-
 git push
 
-hellll.gggg
