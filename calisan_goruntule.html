@@ -10,17 +10,73 @@
 <body>
     <form action="calisan_goruntule_back.php" method="POST">
         
+        <div style="display: flex; align-items: center;">
+            <label for="ogretmen" style="margin-right: 10px;">Öğretmen</label>
+            <input type="checkbox" id="mezun" name="tur" value="view_ogretmen_info" onchange="addCheckboxForOgretmen()">
+
+            <label for="tum" style="margin-right: 10px;">Tümü</label>
+            <input type="checkbox" id="tum" name="tur" value="view_calisan_info">
+        </div><br>
+
         <label for="siralamaTuru">Sıralama ölçütü:</label>
         <select type="text" id="siralamaTuru" name="siralamaTuru">
             <option value="id">ID</option>
             <option value="isim">İsim</option>
             <option value="soyisim">Soyisim</option>
-            <option value="dogumTarihi">Doğum Tarihi</option>
-        </select><br> 
+        </select><br><br>
 
-        <label for="calisan">Adı giriniz (Bütün çalışanlar için '*' giriniz):</label>
-        <input type="text" id="calisan" name="calisan" required><br>
+        <label for="filtrelemeTuru">Girilmek istenen bilgi:</label>
+        <select type="text" id="filtrelemeTuru" name="filtrelemeTuru">
+            <option value="isim">İsim</option>
+            <option value="soyisim">Soyisim</option>
+            <option value="cinsiyet">Cinsiyet</option>
+        </select><br><br>
+        
+        <label>Filtre:</label>
+        <div  id="filtre" style="display: flex; align-items: center;">
+            <label for="id" style="margin-right: 10px;">ID</label>
+            <input type="checkbox" id="id" name="filtre[]" value="ogrenci_id">
 
-        <button type="submit">Çalışanı getir</button>    </form>
+            <label for="isim" style="margin-right: 10px;">İsim</label>
+            <input type="checkbox" id="isim" name="filtre[]" value="ogrenci_isim">
+
+            <label for="soyisim" style="margin-right: 10px; margin-left: 10px;">Soyisim</label>
+            <input type="checkbox" id="soyisim" name="filtre[]" value="ogrenci_soyisim">
+
+            <label for="cinsiyet" style="margin-right: 10px; margin-left: 10px;">Cinsiyet</label>
+            <input type="checkbox" id="cinsiyet" name="filtre[]" value="ogrenci_cinsiyet">
+
+            <label for="yas" style="margin-right: 10px; margin-left: 10px;">Yaş</label>
+            <input type="checkbox" id="yas" name="filtre[]" value="ogrenci_age">
+
+        </div>
+
+        <label for="ogrenci">Bilgiyi giriniz (Bütün için '*' giriniz):</label>
+        <input type="text" id="ogrenci" name="ogrenci" required><br>
+
+        <button type="submit">Çalışanı getir</button>
+    </form>
+    <script>
+    function addCheckboxForOgretmen() {
+        const checkboxLabel = document.createElement('label');
+                checkboxLabel.htmlFor = 'dersKodu';
+                checkboxLabel.innerText = 'Ders Kodu';
+    
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = 'dersKodu';
+                checkbox.name = 'filtre[]';
+                checkbox.value = 'd.ders_kodu';
+    
+                const filtreDiv = document.getElementById('filtre');
+                filtreDiv.appendChild(checkboxLabel);
+                filtreDiv.appendChild(checkbox);
+    
+                // Add an option to filtrelemeTuru select
+                const option = document.createElement('option');
+                option.value = 'ders_kodu';
+                option.text = 'Ders Kodu';
+                document.getElementById('filtrelemeTuru').add(option);
+    }</script>
 </body>
 </html>

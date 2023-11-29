@@ -176,6 +176,32 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
     foreign KEY (gider_id) references gider(gider_id)
 );
 
+CREATE VIEW view_veli_info AS
+SELECT
+    v.v_id as veli_id,
+    v.ogrenci_id as ogrenci_id,
+    v.kimin_nesi as kimin_nesi,
+    vt.tel_no as veli_tel,
+    vm.mail as veli_mail,
+    vi.isim AS veli_isim,
+    vi.soyisim AS veli_soyisim,
+    o.cinsiyet AS ogrenci_cinsiyet,
+    o.isim AS ogrenci_isim,
+    o.soyisim AS ogrenci_soyisim,
+    TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
+    d.ders_kodu AS ogrenci_ders_kodu,
+    d.ders_adi,
+    ds.ders_saati
+FROM
+    veli v
+LEFT JOIN veli_tel vt ON v.v_id = vt.v_id
+LEFT JOIN veli_mail vm ON v.v_id = vm.v_id
+LEFT JOIN veli_isim vi ON v.v_id = vi.v_id
+LEFT JOIN ogrenci o ON v.ogrenci_id = o.ogrenci_id
+LEFT JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
+LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
+LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
 
 CREATE VIEW view_ogretmen AS
 SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati

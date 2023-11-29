@@ -12,6 +12,17 @@
 <body>
     <form action="ogrenci_goruntule_back.php" method="POST">
 
+        <div style="display: flex; align-items: center;">
+            <label for="mezun" style="margin-right: 10px;">Mezun</label>
+            <input type="checkbox" id="mezun" name="tur" value="view_mezun" onchange="addCheckboxForMezun()">
+
+            <label for="aktif" style="margin-right: 10px;">Aktif</label>
+            <input type="checkbox" id="aktif" name="tur" value="view_aktif"  onchange="addCheckboxForAktif()">
+
+            <label for="tum" style="margin-right: 10px;">Tümü</label>
+            <input type="checkbox" id="tum" name="tur" value="view_ogrenci_info">
+        </div><br>
+
         <label for="siralamaTuru">Sıralama ölçütü:</label>
         <select type="text" id="siralamaTuru" name="siralamaTuru">
             <option value="id">ID</option>
@@ -25,11 +36,11 @@
             <option value="isim">İsim</option>
             <option value="soyisim">Soyisim</option>
             <option value="yas">Yaş</option>
-            <option value="dersKodu">Ders Kodu</option>
+            <option value="cinsiyet">Cinsiyet</option>
         </select><br><br>
-
+        
         <label>Filtre:</label>
-        <div style="display: flex; align-items: center;">
+        <div  id="filtre" style="display: flex; align-items: center;">
             <label for="id" style="margin-right: 10px;">ID</label>
             <input type="checkbox" id="id" name="filtre[]" value="ogrenci_id">
 
@@ -43,17 +54,58 @@
             <input type="checkbox" id="cinsiyet" name="filtre[]" value="ogrenci_cinsiyet">
 
             <label for="yas" style="margin-right: 10px; margin-left: 10px;">Yaş</label>
-            <input type="checkbox" id="yas" name="filtre[]" value="ogrenci_dogum_tarihi">
+            <input type="checkbox" id="yas" name="filtre[]" value="ogrenci_age">
 
-            <label for="dersKodu" style="margin-right: 10px; margin-left: 10px;">Ders Kodu</label>
-            <input type="checkbox" id="dersKodu" name="filtre[]" value="ogrenci_ders_kodu">
         </div>
 
-        <label for="ogrenci">Bilgiyi giriniz (Bütün  için '*' giriniz):</label>
+        <label for="ogrenci">Bilgiyi giriniz (Bütün için '*' giriniz):</label>
         <input type="text" id="ogrenci" name="ogrenci" required><br>
 
         <button type="submit">Öğrenciyi getir</button>
     </form>
+
+<script>
+
+
+function addCheckboxForMezun() {
+    const checkboxLabel = document.createElement('label');
+    checkboxLabel.htmlFor = 'bitirmeTarihi';
+    checkboxLabel.innerText = 'Bitirme Tarihi';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = 'bitirmeTarihi';
+    checkbox.name = 'filtre[]';
+    checkbox.value = 'mezun_tarih';
+
+    const filtreDiv = document.getElementById('filtre');
+    filtreDiv.appendChild(checkboxLabel);
+    filtreDiv.appendChild(checkbox);
+}
+
+function addCheckboxForAktif() {
+    const checkboxLabel = document.createElement('label');
+            checkboxLabel.htmlFor = 'dersKodu';
+            checkboxLabel.innerText = 'Ders Kodu';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = 'dersKodu';
+            checkbox.name = 'filtre[]';
+            checkbox.value = 'ders_kodu';
+
+            const filtreDiv = document.getElementById('filtre');
+            filtreDiv.appendChild(checkboxLabel);
+            filtreDiv.appendChild(checkbox);
+
+            // Add an option to filtrelemeTuru select
+            const option = document.createElement('option');
+            option.value = 'ders_kodu';
+            option.text = 'Ders Kodu';
+            document.getElementById('filtrelemeTuru').add(option);
+}
+
+</script>
 </body>
 
 </html>

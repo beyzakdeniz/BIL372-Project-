@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.jpg">
@@ -7,12 +8,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTE</title>
 </head>
+
 <body>
     <form action="veli_goruntule_back.php" method="POST">
-        
-        <label for="veli">Adı giriniz (Bütün veliler için '*' giriniz):</label>
+
+        <label for="siralamaTuru">Sıralama ölçütü:</label>
+        <select type="text" id="siralamaTuru" name="siralamaTuru">
+            <option value="veli_id">ID</option>
+            <option value="veli_isim">İsim</option>
+            <option value="veli_soyisim">Soyisim</option>
+        </select><br><br>
+
+        <label for="filtrelemeTuru">Girilmek istenen bilgi:</label>
+        <select type="text" id="filtrelemeTuru" name="filtrelemeTuru">
+            <option value="isim">İsim</option>
+            <option value="soyisim">Soyisim</option>
+            <option value="yas">Öğrenci Yaşı</option>
+            <option value="dersKodu">Öğrenci Ders Kodu</option>
+            <option value="kimin_nesi">Yakınlığı</option>
+
+        </select><br><br>
+        <label>Filtre:</label>
+<div id="filtre" style="display: flex; flex-wrap: wrap; align-items: center;">
+
+    <!-- Column 1 -->
+    <div style="display: flex; flex-direction: column; margin-right: 20px;">
+        <label for="veliId">Veli ID</label>
+        <input type="checkbox" id="veliId" name="filtre[]" value="veli_id">
+
+        <label for="veliIsim">Veli İsim</label>
+        <input type="checkbox" id="veliIsim" name="filtre[]" value="veli_isim">
+
+        <label for="veliSoyisim">Veli Soyisim</label>
+        <input type="checkbox" id="veliSoyisim" name="filtre[]" value="veli_soyisim">
+
+    </div>
+    <div style="display: flex; flex-direction: column; margin-right: 20px;">
+         <label for="veliTel">Veli Tel</label>
+        <input type="checkbox" id="veliTel" name="filtre[]" value="veli_tel">
+
+        <label for="veliMail">Veli Mail</label>
+        <input type="checkbox" id="veliMail" name="filtre[]" value="veli_mail">
+
+        <label for="kiminNesi">Nesi</label>
+        <input type="checkbox" id="kiminNesi" name="filtre[]" value="kimin_nesi">
+
+    </div>
+
+    <!-- Column 2 -->
+    <div style="display: flex; flex-direction: column;">
+       
+        <label for="ogrenci_id">Öğrenci ID</label>
+        <input type="checkbox" id="ogrenci_id" name="filtre[]" value="ogrenci_id">
+
+        <label for="ogrenci_isim">Öğrenci İsim</label>
+        <input type="checkbox" id="ogrenci_isim" name="filtre[]" value="ogrenci_isim">
+
+        <label for="ogrenci_soyisim">Öğrenci Soyisim</label>
+        <input type="checkbox" id="ogrenci_soyisim" name="filtre[]" value="ogrenci_soyisim">
+
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+       
+        <label for="ogrenci_cinsiyet" style="margin-right: 10px; margin-left: 10px;">Öğrenci Cinsiyet</label>
+        <input type="checkbox" id="ogrenci_cinsiyet" name="filtre[]" value="ogrenci_cinsiyet">
+
+        <label for="ogrenci_yas" style="margin-right: 10px; margin-left: 10px;">Öğrenci Yaş</label>
+        <input type="checkbox" id="ogrenci_yas" name="filtre[]" value="ogrenci_age">
+
+        <label for="ogrenci_ders_kodu" style="margin-right: 10px; margin-left: 10px;">Öğrenci Ders Kodu</label>
+        <input type="checkbox" id="ogrenci_ders_kodu" name="filtre[]" value="ogrenci_ders_kodu">
+
+    </div>
+
+        <br>
+        <label for="veli">Bilgiyi giriniz (Bütün için '*' giriniz):</label>
         <input type="text" id="veli" name="veli" required><br>
 
-        <button type="submit">Veliyi getir</button>    </form>
+        <button type="submit">Veliyi getir</button>
+    </form>
 </body>
+
 </html>
