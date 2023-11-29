@@ -13,7 +13,7 @@
         die("Connection failed: " . $db->connect_error);
     }
 
-    $sql = "SELECT * FROM view_ogretmen WHERE ogretmen_id = $ogretmen_id ORDER BY ders_saati";
+    $sql = "SELECT * FROM view_ogretmen WHERE calisan_id = $ogretmen_id ORDER BY ders_saat";
 
     $result = $db->query($sql);
 
@@ -33,7 +33,7 @@
             while ($row = $result->fetch_assoc()) {                    
                 
                 // Convert the digit string to an integer
-                $rowDersSaati = intval($row['ders_saati']);
+                $rowDersSaati = intval($row['ders_saat']);
                 while ($day * 100 + ($time + 3 )* 2 < $rowDersSaati) {  
                     if ($time < 5) {
                         $time = $time + 1;

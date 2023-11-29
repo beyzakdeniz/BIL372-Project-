@@ -3,17 +3,18 @@
     
     session_start();
 
-    if (!isset($_SESSION["ogretmen_id"])) {
+    if (!isset($_SESSION["ogrenci_id"])) {
         echo "Session not set!";
         exit;
     }
-    $ogretmen_id = $_SESSION["ogretmen_id"];
+    $ogrenci_id = $_SESSION["ogrenci_id"];
 
     if ($db->connect_error) {
         die("Connection failed: " . $db->connect_error);
     }
 
     $sql = "SELECT * FROM view_ogrenci WHERE ogrenci_id = $ogrenci_id ORDER BY ders_saati";
+
 
     $result = $db->query($sql);
 

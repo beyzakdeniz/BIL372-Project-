@@ -6,7 +6,6 @@
 	{
 		echo'
 			<li class="li"><a href="ogretmen_page_bilgi.php">Bilgi Görüntüle</a></li>
-            <li class="li"><a href="bilgi_guncelle.html">Bilgi Güncelle</a></li>
 			<li class="li"><a href="ogretmen_page_program.php">Ders Programı Görüntüle</a></li>
 			<li class="li"><a href="logout.php">Logout</a></li>
 		
