@@ -76,6 +76,33 @@
             $sql = "INSERT INTO maasOdenir (calisan_id, gider_id, maas) VALUES ('$calisan_id', '$gider_id', '$maas')";
             $db->query($sql);
 
+            $sql = "UPDATE ders_saat
+            SET ders_saati = (
+                SELECT
+                    a.musaitlik_id
+                FROM
+                    ders_acilacak da
+                LEFT OUTER JOIN 
+                    ders d ON da.ders_adi = d.ders_adi 
+                JOIN 
+                    ders_talep dt ON d.ders_adi = dt.ders_adi
+                JOIN
+                    ogrenci o ON dt.ogrenci_id = o.ogrenci_id
+                JOIN
+                    aktif a ON o.ogrenci_id = a.ogrenci_id
+                WHERE
+                    d.ders_kodu = '$dersKodu'
+                GROUP BY
+                    a.musaitlik_id
+                ORDER BY
+                    COUNT(a.musaitlik_id) DESC
+                LIMIT 1
+            )
+            WHERE
+                ders_kodu = '$dersKodu'";
+
+        $db->query($sql);
+        
             echo "Ders ve Öğretmen added successfully!";
         } else {
             echo "Error: " . $sql . "<br>" . $db->error;
