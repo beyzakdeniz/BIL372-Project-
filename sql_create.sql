@@ -214,13 +214,13 @@ LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_full AS
 SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
-    isim AS calisan_isim, soyisim AS calisan_soyisimFROM calisan c
-FROM calisan c JOIN fullTime f ON c.calisan_id = f.calisan_id;
+    isim AS calisan_isim, soyisim AS calisan_soyisim
+FROM calisan AS c JOIN fullTime AS f ON c.calisan_id = f.calisan_id;
 
 CREATE VIEW view_part AS
 SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
-    isim AS calisan_isim, soyisim AS calisan_soyisimFROM calisan 
-FROM calisan c JOIN partTime p ON c.calisan_id = p.calisan_id;
+    isim AS calisan_isim, soyisim AS calisan_soyisim
+FROM calisan AS c JOIN partTime AS p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
 SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati
@@ -362,4 +362,3 @@ INSERT INTO `ders_alir` (`ogrenci_id`, `ders_kodu`) VALUES
 INSERT INTO `ders_talep` (`ogrenci_id`, `ders_adi`) VALUES
 (1, 'internet'),
 (7, 'veri');
-
