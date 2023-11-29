@@ -17,10 +17,18 @@
             <option value="id">ID</option>
             <option value="isim">İsim</option>
             <option value="soyisim">Soyisim</option>
-            <option value="dogumTarihi">Doğum Tarihi</option>
-        </select><br>
+            <option value="yas">Yaş</option>
+        </select><br><br>
 
-        <label for="ogrenci">Adı giriniz (Bütün öğrenciler için '*' giriniz):</label>
+
+        <label for="filtrelemeTuru">Girilmek istenen bilgi:</label>
+        <select type="text" id="filtrelemeTuru" name="filtrelemeTuru">
+            <option value="isim">İsim</option>
+            <option value="soyisim">Soyisim</option>
+            <option value="yas">Yaş</option>
+        </select><br><br>
+
+        <label for="ogrenci">Bilgiyi giriniz (Bütün  için '*' giriniz):</label>
         <input type="text" id="ogrenci" name="ogrenci" required><br>
 
         <button type="submit">Öğrenciyi getir</button> </form>
