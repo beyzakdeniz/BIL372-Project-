@@ -213,17 +213,17 @@ LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
 LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_full AS
-SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
-    isim AS calisan_isim, soyisim AS calisan_soyisimFROM calisan c
-FROM calisan c JOIN fullTime f ON c.calisan_id = f.calisan_id;
+SELECT c.calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+    c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
+FROM calisan AS c JOIN fullTime AS f ON c.calisan_id = f.calisan_id;
 
 CREATE VIEW view_part AS
-SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
-    isim AS calisan_isim, soyisim AS calisan_soyisimFROM calisan 
-FROM calisan c JOIN partTime p ON c.calisan_id = p.calisan_id;
+SELECT c.calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+    c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
+FROM calisan AS c JOIN partTime AS p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
-SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati
+SELECT o.calisan_id as calisan_id, d.ders_kodu as ders_kodu, d.ders_adi as ders_adi, ds.ders_saati as ders_saat 
 FROM ogretmen o
 JOIN ders d ON o.ders_kodu = d.ders_kodu
 JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
@@ -362,4 +362,3 @@ INSERT INTO `ders_alir` (`ogrenci_id`, `ders_kodu`) VALUES
 INSERT INTO `ders_talep` (`ogrenci_id`, `ders_adi`) VALUES
 (1, 'internet'),
 (7, 'veri');
-
