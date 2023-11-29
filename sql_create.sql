@@ -147,7 +147,8 @@ CREATE TABLE IF NOT EXISTS gider (
     gider_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     tarih DATE NOT NULL,
     tur char NOT NULL,
-    harcama_turu VARCHAR(20) NOT NULL
+    harcama_turu VARCHAR(20) NOT null,
+    miktar int not null
 );
 
 CREATE TABLE IF NOT EXISTS ders_alir (
@@ -160,14 +161,11 @@ CREATE TABLE IF NOT EXISTS ders_alir (
 
 CREATE TABLE IF NOT EXISTS ders_talep (
     ogrenci_id INT NOT NULL,
-    ders_kodu CHAR(3) NOT NULL,
+    ders_adi VARCHAR(15),
     FOREIGN KEY (ogrenci_id) REFERENCES ogrenci(ogrenci_id)
 );
-CREATE VIEW ders_acilacak AS
-SELECT d.ders_adi
-FROM ders_talep dt join ders d on dt.ders_kodu = d.ders_kodu 
-group BY(d.ders_adi)
-HAVING COUNT(d.ders_adi) > 4;
+
+
 
 
 CREATE TABLE IF NOT EXISTS maasOdenir (
@@ -251,7 +249,14 @@ join ders_alir d;
 
 
 
+CREATE VIEW ders_acilacak AS
+SELECT ders_adi, COUNT(ders_adi) AS ders_count
+FROM ders_talep
+GROUP BY ders_adi
+HAVING COUNT(ders_adi) > 0;
 
+
+select * from ders_acilacak ;
 
 INSERT INTO ders (ders_kodu, ders_adi)
 VALUES 
@@ -308,3 +313,8 @@ INSERT INTO `ders_saat` (`ders_kodu`, `ders_saati`) VALUES
 INSERT INTO `ders_alir` (`ogrenci_id`, `ders_kodu`) VALUES
 (1, 'Fiz'),
 (7, 'Mat');
+
+INSERT INTO `ders_talep` (`ogrenci_id`, `ders_adi`) VALUES
+(1, 'internet'),
+(7, 'veri');
+
