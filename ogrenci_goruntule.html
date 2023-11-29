@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.jpg">
@@ -7,28 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTE</title>
 </head>
+
 <body>
     <form action="ogrenci_goruntule_back.php" method="POST">
-      
-        <label for="siralamaTuru">Sıralama ölçütü:</label>
-        <select type="text" id="siralamaTuru" name="siralamaTuru">
-            <option value="id">ID</option>
-            <option value="isim">İsim</option>
-            <option value="soyisim">Soyisim</option>
-            <option value="yas">Yaş</option>
-        </select><br><br>
-
-
-        <label for="filtrelemeTuru">Girilmek istenen bilgi:</label>
-        <select type="text" id="filtrelemeTuru" name="filtrelemeTuru">
-            <option value="isim">İsim</option>
-            <option value="soyisim">Soyisim</option>
-            <option value="yas">Yaş</option>
-        </select><br><br>
-
-        <label for="ogrenci">Bilgiyi giriniz (Bütün  için '*' giriniz):</label>
+        
+        <label for="ogrenci">Adı giriniz (Bütün öğrenciler için '*' giriniz):</label>
         <input type="text" id="ogrenci" name="ogrenci" required><br>
 
-        <button type="submit">Öğrenciyi getir</button>    </form>
+        <button type="submit">Öğrenciyi getir</button> </form>
 </body>
+
 </html>

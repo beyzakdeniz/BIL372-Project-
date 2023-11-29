@@ -5,7 +5,7 @@
 	if(isset($_SESSION["ogrenci_id"]))
 	{
 		echo'
-			<li class="li"><a href="bilgi_goruntule.html">Bilgi Görüntüle</a></li>
+			<li class="li"><a href="ogrenci_page_bilgi.php">Bilgi Görüntüle</a></li>
             <li class="li"><a href="bilgi_guncelle.html">Bilgi Güncelle</a></li>
             <li class="li"><a href="veli_bilgisi_guncelle.html">Veli Bilgisi Güncelle</a></li>
 			<li class="li"><a href="ders_programi_goruntule.html">Ders Programı Görüntüle</a></li>
