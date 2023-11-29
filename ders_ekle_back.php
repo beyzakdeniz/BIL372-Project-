@@ -20,7 +20,7 @@
         $mail = $db->real_escape_string($_POST['mail']);
         $telefonNo = $db->real_escape_string($_POST['telefonNo']);
         $today = date("Y-m-d");
-        $ders_kodu = $db->real_escape_string($_POST['ders_kodu']);
+        $dersKodu = $db->real_escape_string($_POST['ders_kodu']);
 
         // Insert into the calisan table
         $sql = "INSERT INTO calisan (cinsiyet, dogum_tarihi, isim, soyisim)
@@ -31,7 +31,7 @@
 
             // Get the last inserted ID
             $calisan_id = $db->insert_id;
-                $dersKodu = $_POST["dersKodu"];
+                $dersKodu = $_POST["ders_kodu"];
                 $insertDersQuery = "INSERT INTO ders (ders_kodu, ders_adi) 
                                         VALUES ('$dersKodu', NULL)";
 
