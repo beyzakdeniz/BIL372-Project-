@@ -277,7 +277,13 @@ SELECT o.ogrenci_id,
     TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
     m.mezun_tarih
 FROM ogrenci o
-Natural JOIN mezun m; 
+Natural JOIN mezun m;
+
+
+CREATE VIEW view_aylik_rapor AS
+SELECT * 
+FROM gider 
+WHERE (MONTH(tarih) = MONTH('$tarih') AND YEAR(tarih) = YEAR('$tarih')) OR tur = 's';
 
 
 CREATE VIEW view_aktif AS
