@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+// ders_ekle_back.php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the selectedDers is set in the POST data
+    if (isset($_POST["selectedDers"])) {
+        $selectedDers = $_POST["selectedDers"];
+
+        // Now you can use $selectedDers as needed in your code
+        echo "Selected Ders: " . $selectedDers;
+    } else {
+        // Handle the case where selectedDers is not set
+        echo "Selected Ders not found in POST data.";
+    }
+} else {
+    // Handle cases where the form is not submitted using POST
+    echo "Form not submitted!";
+}
+?>
 <head>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.jpg">
@@ -12,18 +31,12 @@
 <body>
 
 
-    <form action="talep_getir_back.php" method="POST">
-        <button type="submit">Yeterli Talep Alan Dersleri Getir</button>
-    </form>
-
-
     <form action="ders_ekle_back.php" method="POST">
         <h1>Yeni Ders Bilgileri</h1>
 
 
         <div id="DersAdi">
             <label for="DersAdi">Ders Adı:</label>
-            <textarea style="font-size: 14px; width: 150px; height: 20px;" id="digerDersAdi" name="digerDersAdi"></textarea>
         </div><br>
 
         <label for="dersKodu">Ders Kodu:</label>

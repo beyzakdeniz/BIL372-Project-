@@ -10,8 +10,8 @@
 </head>
 
 <body>
-
-<?php
+    
+    <?php
     include "database.php";
 
     session_start();
@@ -27,7 +27,8 @@
         
         $result = $db->query($sql);
         if ($result) {
-            echo "<form method= post  action= ders_ekle_back.php  method=POST>";
+            echo "<form method= post  action= ders_ekle.php  method=POST>";
+            echo "<h1>Talep Edilen Dersler</h1>";
             if ($result->num_rows > 0) {
                 echo "<table><tr>";
                 
