@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
 
 CREATE VIEW view_calisan_info AS
 SELECT
-    calisan_id,
+    calisan_id as calisan_id,
     cinsiyet AS calisan_cinsiyet,
     dogum_tarihi AS calisan_dogum_tarihi,
     isim AS calisan_isim,

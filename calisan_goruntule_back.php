@@ -20,22 +20,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sira;
     if ($siralamaTuru === 'id') {
-        $sira = "calisan_id ASC";
+        $sira = "t.calisan_id ASC";
     } else if ($siralamaTuru === 'isim') {
-        $sira = "calisan_isim ASC";
+        $sira = "t.calisan_isim ASC";
     } else if ($siralamaTuru === 'soyisim') {
-        $sira = "calisan_soyisim ASC";
+        $sira = "t.calisan_soyisim ASC";
     }
 
     $filter;
     if ($filtrelemeTuru === 'isim') {
-        $filter = "calisan_isim";
+        $filter = "t.calisan_isim";
     } else if ($filtrelemeTuru === 'soyisim') {
-        $filter = "calisan_soyisim";
+        $filter = "t.calisan_soyisim";
     } else if ($filtrelemeTuru === 'cinsiyet') {
-        $filter = "calisan_cinsiyet";
+        $filter = "t.calisan_cinsiyet";
     } else if ($filtrelemeTuru === 'id') {
-        $filter = "calisan_id";
+        $filter = "t.calisan_id";
     }
 
     $vals = implode(',', $filtre);
