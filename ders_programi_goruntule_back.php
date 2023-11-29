@@ -56,6 +56,7 @@
                     
                     // Convert the digit string to an integer
                     $rowDersSaati = intval($row['ders_saati']);
+                    echo " $rowDersSaati";
                     while ($day * 100 + ($time + 3 )* 2 < $rowDersSaati) {  
                         if ($time < 5) {
                             $time = $time + 1;

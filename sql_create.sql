@@ -196,7 +196,7 @@ LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 CREATE VIEW view_ders AS
 SELECT d.ders_kodu, d.ders_adi, ds.ders_saati
 FROM ders d
-Left outer JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_ogretmen_info AS
 SELECT o.ogretmen_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
@@ -223,5 +223,29 @@ FROM
 LEFT OUTER JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
 LEFT OUTER JOIN ders d ON da.ders_kodu = d.ders_kodu
 LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
+
+CREATE VIEW view_mezun AS
+SELECT o.ogrenci_id,
+    o.cinsiyet AS ogrenci_cinsiyet,
+    o.isim AS ogrenci_isim,
+    o.soyisim AS ogrenci_soyisim,
+    o.dogum_tarihi AS ogrenci_dogum_tarihi,
+    TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
+    m.mezun_tarih
+FROM ogrenci o
+Natural JOIN mezun m; 
+
+
+CREATE VIEW view_aktif AS
+SELECT o.ogrenci_id,
+    o.cinsiyet AS ogrenci_cinsiyet,
+    o.isim AS ogrenci_isim,
+    o.soyisim AS ogrenci_soyisim,
+    o.dogum_tarihi AS ogrenci_dogum_tarihi,
+    TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
+    a.musaitlik_id
+FROM ogrenci o
+Natural JOIN aktif a; 
 
 show tables from proje;
