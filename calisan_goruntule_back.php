@@ -12,8 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
     $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
     $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
-    $tur =$db->real_escape_string($_POST['tur']); 
-    $meslek =$db->real_escape_string($_POST['meslek']);
+    $tur = $db->real_escape_string($_POST['tur']); 
+    $meslek = $db->real_escape_string($_POST['meslek']);
 
     // Retrieve the entered employee name from the form
     $calisan = $_POST["calisan"];
@@ -32,9 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $filter = "calisan_isim";
     } else if ($filtrelemeTuru === 'soyisim') {
         $filter = "calisan_soyisim";
-    }else if ($filtrelemeTuru === 'cinsiyet') {
+    } else if ($filtrelemeTuru === 'cinsiyet') {
         $filter = "calisan_cinsiyet";
-    }else if ($filtrelemeTuru === 'id') {
+    } else if ($filtrelemeTuru === 'id') {
         $filter = "calisan_id";
     }
 
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id ORDER BY $sira";
         $stmt = $db->prepare($sql);
     } else {
-        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id where $filter like ? ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id WHERE $filter LIKE ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully
@@ -56,39 +56,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-   // Execute the query
-   $stmt->execute();
+    // Execute the query
+    $stmt->execute();
 
-   // Get the result set
-   $result = $stmt->get_result();
+    // Get the result set
+    $result = $stmt->get_result();
 
-   // Check if there are rows in the result set
-   if ($result->num_rows > 0) {
-       // Output data of each row
-       echo "<table border='1'>";
-       echo "<tr>";
-       foreach ($result->fetch_assoc() as $columnName => $columnValue) {
-           echo "<th>$columnName</th>";
-       }
-       echo "</tr>";
+    // Check if there are rows in the result set
+    if ($result->num_rows > 0) {
+        // Output table header
+        echo "<table border='1'><tr>";
+        foreach ($result->fetch_assoc() as $columnName => $columnValue) {
+            echo "<th>$columnName</th>";
+        }
+        echo "</tr>";
 
-       // Reset the result set pointer back to the beginning
-       $result->data_seek(0);
+        // Reset the result set pointer back to the beginning
+        $result->data_seek(0);
 
-       while ($row = $result->fetch_assoc()) {
-           echo "<tr>";
-           foreach ($row as $columnValue) {
-               echo "<td>$columnValue</td>";
-           }
-           echo "</tr>";
-       }
-       echo "</table>";
-   } else {
-       echo "No results found";
-   }
+        // Output data of each row
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            foreach ($row as $columnValue) {
+                echo "<td>$columnValue</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No results found";
+    }
 
-   // Close the prepared statement and the database connection
-   $stmt->close();
-   $db->close();
+    // Close the prepared statement and the database connection
+    $stmt->close();
+    $db->close();
 }
 ?>
