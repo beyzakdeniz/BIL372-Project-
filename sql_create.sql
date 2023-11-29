@@ -244,8 +244,9 @@ SELECT o.ogrenci_id,
     o.soyisim AS ogrenci_soyisim,
     o.dogum_tarihi AS ogrenci_dogum_tarihi,
     TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
-    a.musaitlik_id
+    d.ders_kodu AS ders_kodu
 FROM ogrenci o
-Natural JOIN aktif a; 
+Natural JOIN aktif a
+join ders_alir d; 
 
 show tables from proje;
