@@ -377,3 +377,48 @@ INSERT INTO `ders_alir` (`ogrenci_id`, `ders_kodu`) VALUES
 INSERT INTO `ders_talep` (`ogrenci_id`, `ders_adi`) VALUES
 (1, 'internet'),
 (7, 'veri');
+
+DELIMITER //
+CREATE TRIGGER derse_malzeme_ekleyici AFTER INSERT 
+ON ders
+FOR EACH ROW
+INSERT INTO malzeme (stok, ders_kodu)
+VALUES (10, new.ders_kodu);//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER giderde_tarih_guncelleyici 
+BEFORE INSERT ON gider
+FOR EACH ROW
+BEGIN
+    IF NEW.tur = 's' THEN
+        SET NEW.tarih = NOW();
+    END IF;
+END; //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER calisana_gider_ekle
+BEFORE INSERT ON calisan 
+FOR EACH ROW
+begin 
+    DECLARE maas_value INT;
+    set maas_value = null;
+    INSERT INTO gider (tarih, tur, harcama_turu, miktar)
+    VALUES (NOW(), 's', 'maaş', maas_value);
+END; //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER gidere_maas_ekle
+AFTER INSERT ON maasOdenir
+FOR EACH ROW
+BEGIN
+    DECLARE maas_value INT;
+    SET maas_value = NEW.maas;
+
+    UPDATE gider
+    SET miktar = maas_value
+    WHERE gider_id = NEW.gider_id;
+END;//
+DELIMITER ;
