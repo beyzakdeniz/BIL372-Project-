@@ -10,25 +10,81 @@
     // Check if form is submitted using the POST method
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        // Retrieve the entered employee name from the form
-        $ogrenciAdi = $_POST["ogrenci"];
+        $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
+        $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
 
-        if ($ogrenciAdi === '*') {
+        // Retrieve the entered employee name from the form
+        $ogrenci = $_POST["ogrenci"];
+
+        if ($ogrenci === '*') {
             // Retrieve all employees if '*' is entered
-            $sql = "SELECT * FROM ogrenci";
-        } else {
-            // Retrieve employees based on the entered name
-            $sql = "SELECT * FROM ogrenci WHERE isim LIKE ?";
+                if($siralamaTuru === 'id'){
+                    $sql = "SELECT * FROM ogrenci ORDER BY ogrenci_id ASC";
+                }else if($siralamaTuru === 'isim'){
+                    $sql = "SELECT * FROM ogrenci ORDER BY isim ASC";
+                }else if($siralamaTuru === 'soyisim'){
+                    $sql = "SELECT * FROM ogrenci ORDER BY soyisim ASC";
+                }else if($siralamaTuru === 'yas'){
+                    $sql = "SELECT * FROM ogrenci ORDER BY dogum_tarihi ASC";
+                }  
+
         }
+
+        if($filtrelemeTuru === 'isim'){ 
+            if ($ogrenci === '*') {
+            } else {
+            // Retrieve employees based on the entered name
+                if($siralamaTuru === 'id'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE isim LIKE ? ORDER BY ogrenci_id ASC";
+                }else if($siralamaTuru === 'isim'){
+                     $sql = "SELECT * FROM ogrenci_info WHERE isim LIKE ? ORDER BY isim ASC";
+                }else if($siralamaTuru === 'soyisim'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE isim LIKE ? ORDER BY soyisim ASC";
+                }else if($siralamaTuru === 'yas'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE isim LIKE ? ORDER BY dogum_tarihi ASC";
+                }  
+            }
+        }else if($filtrelemeTuru === 'soyisim'){ 
+            if ($ogrenci === '*') {
+
+            } else {
+            // Retrieve employees based on the entered name
+                if($siralamaTuru === 'id'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE soyisim LIKE ? ORDER BY ogrenci_id ASC";
+                }else if($siralamaTuru === 'isim'){
+                     $sql = "SELECT * FROM ogrenci_info WHERE soyisim LIKE ? ORDER BY isim ASC";
+                }else if($siralamaTuru === 'soyisim'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE soyisim LIKE ? ORDER BY soyisim ASC";
+                }else if($siralamaTuru === 'yas'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE soyisim LIKE ? ORDER BY dogum_tarihi ASC";
+                }  
+            }
+        }else if($filtrelemeTuru === 'yas'){ 
+            if ($ogrenci === '*') {
+
+            } else {
+            // Retrieve employees based on the entered name
+                if($siralamaTuru === 'id'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE ogrenci_age = $ogrenci ORDER BY ogrenci_id ASC";
+                }else if($siralamaTuru === 'isim'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE ogrenci_age = $ogrenci ORDER BY isim ASC";
+                }else if($siralamaTuru === 'soyisim'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE ogrenci_age = $ogrenci ORDER BY soyisim ASC";
+                }else if($siralamaTuru === 'yas'){
+                    $sql = "SELECT * FROM ogrenci_info WHERE ogrenci_age = $ogrenci ORDER BY dogum_tarihi ASC";
+                }  
+            }
+        }
+
 
         // Prepare the SQL statement
         $stmt = $db->prepare($sql);
 
-        if ($ogrenciAdi !== '*') {
+        if ($ogrenci !== '*') {
             // Bind parameters only if a specific name is entered
             // For '*' case, no binding is necessary
-            $ogrenciAdiParam = "%$ogrenciAdi%";
-            $stmt->bind_param("s", $ogrenciAdiParam);
+            $ogrenciParam = "%$ogrenci%";
+            $stmt->bind_param("s", $ogrenciParam);
         }
 
         // Execute the query
