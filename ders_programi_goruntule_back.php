@@ -10,17 +10,20 @@
         if (isset($_POST["p_id_ders"]) ){
             $id = $_POST["p_id_ders"] ;
             $view = 'view_ders';
+            $idCondition = "ders_kodu = '$id'";
            
         }
 
         elseif (isset($_POST["p_id_ogrenci"]) ){
             $id = $_POST["p_id_ogrenci"] ;
             $view = 'view_ogrenci';
+            $idCondition = "ogrenci_id = '$id'";
         }
 
         elseif (isset($_POST["p_id_ogretmen"]) ){
             $id = $_POST["p_id_ogretmen"] ;
             $view = 'view_ogretmen';
+            $idCondition = "ogretmen_id = '$id'";
         }
 
         else{
@@ -30,8 +33,6 @@
         
         if ($id === '*') {
             $idCondition = "1"; // If ID is '*', retrieve all tuples
-        } else {
-            $idCondition = "ders_kodu = '$id'";
         }
 
 
@@ -55,10 +56,9 @@
                 while ($row = $result->fetch_assoc()) {                    
                     
                     // Convert the digit string to an integer
-                    if($row['ders_saati'] != null)
-                        $rowDersSaati = intval($row['ders_saati']);
-                    else
-                        $rowDersSaati = 999;
+        
+                    $rowDersSaati = intval($row['ders_saati']);
+                   
                     echo " $rowDersSaati";
                     while ($day * 100 + ($time + 3 )* 2 < $rowDersSaati) {  
                         if ($time < 5) {
