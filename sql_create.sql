@@ -213,13 +213,13 @@ LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
 LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_full AS
-SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
-    isim AS calisan_isim, soyisim AS calisan_soyisim
+SELECT c.calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+    c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
 FROM calisan AS c JOIN fullTime AS f ON c.calisan_id = f.calisan_id;
 
 CREATE VIEW view_part AS
-SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
-    isim AS calisan_isim, soyisim AS calisan_soyisim
+SELECT c.calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+    c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
 FROM calisan AS c JOIN partTime AS p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
