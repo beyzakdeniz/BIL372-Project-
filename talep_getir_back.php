@@ -34,14 +34,14 @@
                 
                 // Adjust table headers based on the selected view
                 echo "<table border='1'>";
-                echo "<th> Ders Adı <th> Talep Sayısı <th> Dersi Ekle"   ;
+                echo "<th> Ders Adı <th> Talep Sayısı "   ;
                 echo " <tr>";
                 
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
                     echo "<td>" . $row['ders_adi'] . "</td>";
                     echo "<td>" . $row['ders_count'] . "</td>";
-                    echo "<td>";
+                    
 
                     echo "</td>";
                     echo "</tr>";
