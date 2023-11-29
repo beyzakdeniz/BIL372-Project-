@@ -12,8 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
     $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
     $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
-    $tur =$db->real_escape_string($_POST['tur']); 
-    $meslek =$db->real_escape_string($_POST['meslek']);
+    $tur = $db->real_escape_string($_POST['tur']);
+    $meslek = $db->real_escape_string($_POST['meslek']);
 
     // Retrieve the entered employee name from the form
     $calisan = $_POST["calisan"];
@@ -25,16 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sira = "calisan_isim ASC";
     } else if ($siralamaTuru === 'soyisim') {
         $sira = "calisan_soyisim ASC";
-    } 
+    }
 
     $filter;
     if ($filtrelemeTuru === 'isim') {
         $filter = "calisan_isim";
     } else if ($filtrelemeTuru === 'soyisim') {
         $filter = "calisan_soyisim";
-    }else if ($filtrelemeTuru === 'cinsiyet') {
+    } else if ($filtrelemeTuru === 'cinsiyet') {
         $filter = "calisan_cinsiyet";
-    }else if ($filtrelemeTuru === 'id') {
+    } else if ($filtrelemeTuru === 'id') {
         $filter = "calisan_id";
     }
 
@@ -44,20 +44,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id ORDER BY $sira";
         $stmt = $db->prepare($sql);
     } else {
-        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id where $filter like ? ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id WHERE $filter LIKE ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully
-        if ($stmt) {
-            $calisanParam = "%$calisan%";
-            $stmt->bind_param("s", $calisanParam);
-        } else {
+        if (!$stmt) {
             die("Error preparing statement: " . $db->error);
         }
+
+        // Bind parameters
+        $calisanParam = "%$calisan%";
+        $stmt->bind_param("s", $calisanParam);
     }
 
     // Execute the query
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
 
     // Get the result set
     $result = $stmt->get_result();
