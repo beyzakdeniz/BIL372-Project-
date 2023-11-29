@@ -55,7 +55,11 @@
                 while ($row = $result->fetch_assoc()) {                    
                     
                     // Convert the digit string to an integer
-                    $rowDersSaati = intval($row['ders_saati']);
+                    if($row['ders_saati'] != null)
+                        $rowDersSaati = intval($row['ders_saati']);
+                    else
+                        $rowDersSaati = 999;
+                    echo " $rowDersSaati";
                     while ($day * 100 + ($time + 3 )* 2 < $rowDersSaati) {  
                         if ($time < 5) {
                             $time = $time + 1;
@@ -85,7 +89,7 @@
         
                 echo "</table>";
             } else {
-                echo "No results found";
+                echo "Dersi Yok";
             }
         } else {
             // Handle database query error
