@@ -215,7 +215,7 @@ SELECT
     o.soyisim AS ogrenci_soyisim,
     o.dogum_tarihi AS ogrenci_dogum_tarihi,
     TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
-    d.ders_kodu,
+    d.ders_kodu AS ogrenci_ders_kodu,
     d.ders_adi,
     ds.ders_saati
 FROM

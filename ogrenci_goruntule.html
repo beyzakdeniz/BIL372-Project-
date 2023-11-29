@@ -20,18 +20,40 @@
             <option value="yas">Yaş</option>
         </select><br><br>
 
-
         <label for="filtrelemeTuru">Girilmek istenen bilgi:</label>
         <select type="text" id="filtrelemeTuru" name="filtrelemeTuru">
             <option value="isim">İsim</option>
             <option value="soyisim">Soyisim</option>
             <option value="yas">Yaş</option>
+            <option value="dersKodu">Ders Kodu</option>
         </select><br><br>
+
+        <label>Filtre:</label>
+        <div style="display: flex; align-items: center;">
+            <label for="id" style="margin-right: 10px;">ID</label>
+            <input type="checkbox" id="id" name="filtre[]" value="ogrenci_id">
+
+            <label for="isim" style="margin-right: 10px;">İsim</label>
+            <input type="checkbox" id="isim" name="filtre[]" value="ogrenci_isim">
+
+            <label for="soyisim" style="margin-right: 10px; margin-left: 10px;">Soyisim</label>
+            <input type="checkbox" id="soyisim" name="filtre[]" value="ogrenci_soyisim">
+
+            <label for="cinsiyet" style="margin-right: 10px; margin-left: 10px;">Cinsiyet</label>
+            <input type="checkbox" id="cinsiyet" name="filtre[]" value="ogrenci_cinsiyet">
+
+            <label for="yas" style="margin-right: 10px; margin-left: 10px;">Yaş</label>
+            <input type="checkbox" id="yas" name="filtre[]" value="ogrenci_dogum_tarihi">
+
+            <label for="dersKodu" style="margin-right: 10px; margin-left: 10px;">Ders Kodu</label>
+            <input type="checkbox" id="dersKodu" name="filtre[]" value="ogrenci_ders_kodu">
+        </div>
 
         <label for="ogrenci">Bilgiyi giriniz (Bütün  için '*' giriniz):</label>
         <input type="text" id="ogrenci" name="ogrenci" required><br>
 
-        <button type="submit">Öğrenciyi getir</button> </form>
+        <button type="submit">Öğrenciyi getir</button>
+    </form>
 </body>
 
 </html>
