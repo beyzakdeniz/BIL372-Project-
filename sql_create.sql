@@ -213,12 +213,12 @@ LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
 LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_full AS
-SELECT c.calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+SELECT c.calisan_id as calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
     c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
 FROM calisan AS c JOIN fullTime AS f ON c.calisan_id = f.calisan_id;
 
 CREATE VIEW view_part AS
-SELECT c.calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+SELECT c.calisan_id as calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
     c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
 FROM calisan AS c JOIN partTime AS p ON c.calisan_id = p.calisan_id;
 
@@ -277,7 +277,13 @@ SELECT o.ogrenci_id,
     TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
     m.mezun_tarih
 FROM ogrenci o
-Natural JOIN mezun m; 
+Natural JOIN mezun m;
+
+
+CREATE VIEW view_aylik_rapor AS
+SELECT * 
+FROM gider 
+WHERE (MONTH(tarih) = MONTH('$tarih') AND YEAR(tarih) = YEAR('$tarih')) OR tur = 's';
 
 
 CREATE VIEW view_aktif AS
