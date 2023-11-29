@@ -57,13 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Execute the query
-    $result = $stmt->execute();
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     // Check if the execution was successful
-    if ($result) {
-        // Get the result set
-        $result = $stmt->get_result();
-
+    
         // Check if there are rows in the result set
         if ($result->num_rows > 0) {
             // Output data of each row
@@ -93,11 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Close the result set
         $result->close();
-    } else {
-        // Handle the case where execution fails
-        die("Error executing statement: " . $stmt->error);
-    }
-
     // Close the prepared statement and the database connection
     $stmt->close();
     $db->close();

@@ -21,6 +21,7 @@
         $telefonNo = $db->real_escape_string($_POST['telefonNo']);
         $today = date("Y-m-d");
         $dersKodu = $db->real_escape_string($_POST['ders_kodu']);
+        $dersAdi = $db->real_escape_string($_POST['ders_adi']);
 
         // Insert into the calisan table
         $sql = "INSERT INTO calisan (cinsiyet, dogum_tarihi, isim, soyisim)
