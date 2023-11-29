@@ -252,6 +252,20 @@ LEFT OUTER JOIN calisan c ON o.calisan_id = c.calisan_id
 LEFT OUTER JOIN ders d ON o.ders_kodu = d.ders_kodu
 LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
+CREATE VIEW view_idari_info AS
+SELECT o.idari_id_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
+    c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+    c.maas AS calisan_maas
+FROM idari o
+LEFT OUTER JOIN calisan c ON o.calisan_id = c.calisan_id;
+
+CREATE VIEW view_temizlik_info AS
+SELECT o.temizlik_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
+    c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+    c.maas AS calisan_maas
+FROM temizlik o
+LEFT OUTER JOIN calisan c ON o.calisan_id = c.calisan_id;
+
 CREATE VIEW view_ogrenci_info AS
 SELECT
     o.ogrenci_id,
@@ -363,3 +377,48 @@ INSERT INTO `ders_alir` (`ogrenci_id`, `ders_kodu`) VALUES
 INSERT INTO `ders_talep` (`ogrenci_id`, `ders_adi`) VALUES
 (1, 'internet'),
 (7, 'veri');
+
+DELIMITER //
+CREATE TRIGGER derse_malzeme_ekleyici AFTER INSERT 
+ON ders
+FOR EACH ROW
+INSERT INTO malzeme (stok, ders_kodu)
+VALUES (10, new.ders_kodu);//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER giderde_tarih_guncelleyici 
+BEFORE INSERT ON gider
+FOR EACH ROW
+BEGIN
+    IF NEW.tur = 's' THEN
+        SET NEW.tarih = NOW();
+    END IF;
+END; //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER calisana_gider_ekle
+BEFORE INSERT ON calisan 
+FOR EACH ROW
+begin 
+    DECLARE maas_value INT;
+    set maas_value = null;
+    INSERT INTO gider (tarih, tur, harcama_turu, miktar)
+    VALUES (NOW(), 's', 'maaş', maas_value);
+END; //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER gidere_maas_ekle
+AFTER INSERT ON maasOdenir
+FOR EACH ROW
+BEGIN
+    DECLARE maas_value INT;
+    SET maas_value = NEW.maas;
+
+    UPDATE gider
+    SET miktar = maas_value
+    WHERE gider_id = NEW.gider_id;
+END;//
+DELIMITER ;

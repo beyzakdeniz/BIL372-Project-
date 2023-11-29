@@ -1,4 +1,4 @@
-<div class="admin_barı"><br>
+<div class="student_bar"><br>
 <h3 class="text">Menü</h3><br><hr><br>
 <ul class="s">
 <?php

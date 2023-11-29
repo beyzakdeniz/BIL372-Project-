@@ -5,4 +5,3 @@ git commit -a -m "guncellendi"
 git pull (arkadaşların güncellemelerini alır)
 
 git push (senin commitlerin github'a yüklenir) (push'lamadan önce mutlaka pull yap)
-

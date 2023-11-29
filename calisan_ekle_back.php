@@ -93,8 +93,10 @@
             $sql = "INSERT INTO calisan_telefon (calisan_id, telefon) VALUES ('$calisan_id', '$telefonNo')";
             $db->query($sql);
 
+            
             $sql = "INSERT INTO gider (tarih, tur, harcama_turu) VALUES ('$today', 's', 'maaş')";
             $db->query($sql);
+    
 
             // Eklenen giderin ID'sini al
             $gider_id = $db->insert_id;

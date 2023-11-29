@@ -12,8 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
     $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
     $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
+<<<<<<< HEAD
+    $meslek =$db->real_escape_string($_POST['meslek']);
+=======
     $tur = $db->real_escape_string($_POST['tur']); 
     $meslek = $db->real_escape_string($_POST['meslek']);
+>>>>>>> 988705cb24e9df09d59c90305a8bbdce68177740
 
     // Retrieve the entered employee name from the form
     $calisan = $_POST["calisan"];
@@ -25,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sira = "calisan_isim ASC";
     } else if ($siralamaTuru === 'soyisim') {
         $sira = "calisan_soyisim ASC";
-    } 
+    }
 
     $filter;
     if ($filtrelemeTuru === 'isim') {
@@ -41,16 +45,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vals = implode(',', $filtre);
 
     if ($calisan === '*') {
-        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur ORDER BY $sira";
         $stmt = $db->prepare($sql);
     } else {
+<<<<<<< HEAD
+        $sql = "SELECT $vals FROM $tur where $filter like ? ORDER BY $sira";
+=======
         $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id WHERE $filter LIKE ? ORDER BY $sira";
+>>>>>>> 988705cb24e9df09d59c90305a8bbdce68177740
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully
         if ($stmt) {
-            $calisanParam = "%$calisan%";
-            $stmt->bind_param("s", $calisanParam);
+            $ogrenciParam = "%$ogrenci%";
+            $stmt->bind_param("s", $ogrenciParam);
         } else {
             die("Error preparing statement: " . $db->error);
         }
@@ -58,6 +66,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute the query
     $stmt->execute();
+<<<<<<< HEAD
+
+    // Get the result set
+    $result = $stmt->get_result();
+
+    // Check if there are rows in the result set
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        $row = $result->fetch_assoc(); // Fetch the first row to get column names
+
+        echo "<table border='1'>";
+        echo "<tr>";
+        foreach ($row as $columnName => $columnValue) {
+            echo "<th>$columnName</th>";
+        }
+        echo "</tr>";
+
+        // Reset the result set pointer back to the beginning
+        $result->data_seek(0);
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            foreach ($row as $columnValue) {
+                echo "<td>$columnValue</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No results found";
+    }
+
+=======
     $result = $stmt->get_result();
 
     // Check if the execution was successful
@@ -91,6 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Close the result set
         $result->close();
+>>>>>>> 988705cb24e9df09d59c90305a8bbdce68177740
     // Close the prepared statement and the database connection
     $stmt->close();
     $db->close();
