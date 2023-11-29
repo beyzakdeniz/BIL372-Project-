@@ -41,10 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vals = implode(',', $filtre);
 
     if ($calisan === '*') {
-        $sql = "SELECT $vals FROM $tur JOIN $meslek ON calisan_id = calisan_id ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id ORDER BY $sira";
         $stmt = $db->prepare($sql);
     } else {
-        $sql = "SELECT $vals FROM $tur JOIN $meslek ON calisan_id = calisan_id where $filter like ? ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id where $filter like ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully
@@ -98,8 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error executing statement: " . $stmt->error);
     }
 
-    // Close the prepared statement and the database connection
-    $stmt->close();
-    $db->close();
+   // Close the prepared statement and the database connection
+   $stmt->close();
+   $db->close();
 }
 ?>
