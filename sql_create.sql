@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS calisan (
     dogum_tarihi DATE NOT NULL,
     isim VARCHAR(30) NOT NULL,
     soyisim VARCHAR(30) NOT NULL,  
+    maas INT NOT NULL,
     PRIMARY KEY (calisan_id)
 );
 
@@ -178,10 +179,11 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
 
 CREATE VIEW view_calisan_info AS
 SELECT
-    calisan_id,
+    calisan_id as calisan_id,
     cinsiyet AS calisan_cinsiyet,
     dogum_tarihi AS calisan_dogum_tarihi,
     isim AS calisan_isim,
+    maas AS calisan_maas,
     soyisim AS calisan_soyisim
 FROM
     calisan;
@@ -214,12 +216,12 @@ LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_full AS
 SELECT c.calisan_id as calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
-    c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
+    c.isim AS calisan_isim, c.maas AS calisan_maas,c.soyisim AS calisan_soyisim
 FROM calisan AS c JOIN fullTime AS f ON c.calisan_id = f.calisan_id;
 
 CREATE VIEW view_part AS
 SELECT c.calisan_id as calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
-    c.isim AS calisan_isim, c.soyisim AS calisan_soyisim
+    c.isim AS calisan_isim, c.maas AS calisan_maas, c.soyisim AS calisan_soyisim
 FROM calisan AS c JOIN partTime AS p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
@@ -244,7 +246,7 @@ JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 CREATE VIEW view_ogretmen_info AS
 SELECT o.ogretmen_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
     c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
-    d.ders_kodu, d.ders_adi, ds.ders_saati
+    c.maas AS calisan_maas, d.ders_kodu, d.ders_adi, ds.ders_saati
 FROM ogretmen o
 LEFT OUTER JOIN calisan c ON o.calisan_id = c.calisan_id
 LEFT OUTER JOIN ders d ON o.ders_kodu = d.ders_kodu
@@ -277,7 +279,13 @@ SELECT o.ogrenci_id,
     TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
     m.mezun_tarih
 FROM ogrenci o
-Natural JOIN mezun m; 
+Natural JOIN mezun m;
+
+
+CREATE table aylik_rapor AS
+SELECT * 
+FROM gider 
+WHERE (MONTH(tarih) = MONTH('$tarih') AND YEAR(tarih) = YEAR('$tarih')) OR tur = 's';
 
 
 CREATE VIEW view_aktif AS
@@ -323,17 +331,17 @@ INSERT INTO ogrenci (cinsiyet, isim, soyisim, dogum_tarihi) VALUES
 ('E', 'Matthew', 'Moore', '2001-03-25'),
 ('K', 'Sophia', 'Anderson', '2000-08-18');
 
-INSERT INTO calisan (cinsiyet, dogum_tarihi, isim, soyisim) VALUES
-('E', '1985-03-10', 'Ahmet', 'Yılmaz'),
-('K', '1990-07-22', 'Ayşe', 'Kaya'),
-('E', '1988-11-05', 'Mehmet', 'Demir'),
-('K', '1995-04-15', 'Fatma', 'Öztürk'),
-('E', '1987-09-28', 'Mustafa', 'Arslan'),
-('K', '1993-01-12', 'Zeynep', 'Çelik'),
-('E', '1986-06-20', 'Ali', 'Şahin'),
-('K', '1991-12-08', 'Sema', 'Koç'),
-('E', '1989-02-18', 'Burak', 'Turan'),
-('K', '1994-08-03', 'Esra', 'Aksoy');
+INSERT INTO calisan (cinsiyet, dogum_tarihi, isim, soyisim , maas) VALUES
+('E', '1985-03-10', 'Ahmet', 'Yılmaz', 1000),
+('K', '1990-07-22', 'Ayşe', 'Kaya', 2888),
+('E', '1988-11-05', 'Mehmet', 'Demir', 400),
+('K', '1995-04-15', 'Fatma', 'Öztürk', 2888),
+('E', '1987-09-28', 'Mustafa', 'Arslan',245),
+('K', '1993-01-12', 'Zeynep', 'Çelik',7654),
+('E', '1986-06-20', 'Ali', 'Şahin',36),
+('K', '1991-12-08', 'Sema', 'Koç',856),
+('E', '1989-02-18', 'Burak', 'Turan',6754),
+('K', '1994-08-03', 'Esra', 'Aksoy',7685);
 
 INSERT INTO ogretmen (calisan_id, ders_kodu) VALUES
 (1, 'MAT'),

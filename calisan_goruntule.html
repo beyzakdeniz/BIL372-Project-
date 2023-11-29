@@ -21,7 +21,7 @@
             <input type="checkbox" id="tum" name="tur" value="view_calisan_info">
         </div><br>
         
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center;" name="meslek" id="meslek">
             <label for="ogretmen" style="margin-right: 10px;">Öğretmen</label>
             <input type="checkbox" id="ogretmen" name="meslek" value="view_ogretmen" onchange="addCheckboxForOgretmen()">
 
@@ -52,20 +52,20 @@
         
         <label>Filtre:</label>
         <div  id="filtre" style="display: flex; align-items: center;">
-            <label for="id" style="margin-right: 10px;">ID</label>
-            <input type="checkbox" id="id" name="filtre[]" value="calisan_id">
+            <label for="calisan_id" style="margin-right: 10px;">ID</label>
+            <input type="checkbox" id="calisan_id" name="filtre[]" value="calisan_id">
 
-            <label for="isim" style="margin-right: 10px;">İsim</label>
-            <input type="checkbox" id="isim" name="filtre[]" value="calisan_isim">
+            <label for="calisan_isim" style="margin-right: 10px;">İsim</label>
+            <input type="checkbox" id="calisan_isim" name="filtre[]" value="calisan_isim">
 
-            <label for="soyisim" style="margin-right: 10px; margin-left: 10px;">Soyisim</label>
-            <input type="checkbox" id="soyisim" name="filtre[]" value="calisan_soyisim">
+            <label for="calisan_soyisim" style="margin-right: 10px; margin-left: 10px;">Soyisim</label>
+            <input type="checkbox" id="calisan_soyisim" name="filtre[]" value="calisan_soyisim">
 
-            <label for="cinsiyet" style="margin-right: 10px; margin-left: 10px;">Cinsiyet</label>
-            <input type="checkbox" id="cinsiyet" name="filtre[]" value="calisan_cinsiyet">
+            <label for="calisan_cinsiyet" style="margin-right: 10px; margin-left: 10px;">Cinsiyet</label>
+            <input type="checkbox" id="calisan_cinsiyet" name="filtre[]" value="calisan_cinsiyet">
 
-            <label for="dogumTarihi" style="margin-right: 10px; margin-left: 10px;">Doğum Tarihi</label>
-            <input type="checkbox" id="dogumTarihi" name="filtre[]" value="calisan_dogum_tarihi">
+            <label for="calisan_dogumTarihi" style="margin-right: 10px; margin-left: 10px;">Doğum Tarihi</label>
+            <input type="checkbox" id="calisan_dogumTarihi" name="filtre[]" value="calisan_dogum_tarihi">
 
         </div>
 
