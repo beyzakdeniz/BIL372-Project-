@@ -223,7 +223,7 @@ SELECT c.calisan_id, c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_d
 FROM calisan AS c JOIN partTime AS p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
-SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati
+SELECT o.calisan_id as calisan_id, d.ders_kodu as ders_kodu, d.ders_adi as ders_adi, ds.ders_saati as ders_saat 
 FROM ogretmen o
 JOIN ders d ON o.ders_kodu = d.ders_kodu
 JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
