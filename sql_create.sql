@@ -253,7 +253,7 @@ LEFT OUTER JOIN ders d ON o.ders_kodu = d.ders_kodu
 LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_idari_info AS
-SELECT o.idari_id_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
+SELECT o.idari_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
     c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
     c.maas AS calisan_maas
 FROM idari o
