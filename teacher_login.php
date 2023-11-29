@@ -25,6 +25,8 @@
 						$_SESSION["ogretmen_id"]=$ro["ogretmen_id"];
 						echo "<script>window.open('teacher_home.php','_self');</script>";
 					}
+					else	
+						echo '<script>alert("invalid id, try again")</script>';
 					
 				}
 				if(isset($_GET["mes"]))

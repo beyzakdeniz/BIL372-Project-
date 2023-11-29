@@ -15,12 +15,11 @@
 
     if ($raporTuru == 'aylik') {
         // Aylık rapor sorgusu
-        $query = "SELECT * FROM gider WHERE MONTH(tarih) = MONTH('$tarih') AND YEAR(tarih) = YEAR('$tarih')";
+        $query = "SELECT * from view_aylik_rapor";
         // Sorguyu çalıştır
         $results = $db->query($query);
     } elseif ($raporTuru == 'haftalik') {
         // Haftalık rapor sorgusu
-        // Not: Bu kısım, veritabanınızın yapısına bağlı olarak değişebilir
         $query = "SELECT * FROM gider WHERE WEEK(tarih) = WEEK('$tarih')";
         // Sorguyu çalıştır
         $results = $db->query($query);
