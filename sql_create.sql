@@ -282,7 +282,7 @@ FROM ogrenci o
 Natural JOIN mezun m;
 
 
-CREATE VIEW view_aylik_rapor AS
+CREATE table aylik_rapor AS
 SELECT * 
 FROM gider 
 WHERE (MONTH(tarih) = MONTH('$tarih') AND YEAR(tarih) = YEAR('$tarih')) OR tur = 's';
