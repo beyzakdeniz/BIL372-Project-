@@ -25,7 +25,9 @@
 						$_SESSION["ogrenci_id"]=$ro["ogrenci_id"];
 						echo "<script>window.open('student_home.php','_self');</script>";
 					}
-					
+					else 
+						echo '<script>alert("invalid id, try again")</script>';
+				
 				}
 				if(isset($_GET["mes"]))
 				{

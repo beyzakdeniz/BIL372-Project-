@@ -10,15 +10,33 @@
     // Check if form is submitted using the POST method
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+        $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
         // Retrieve the entered employee name from the form
         $ogrenciAdi = $_POST["ogrenci"];
 
         if ($ogrenciAdi === '*') {
             // Retrieve all employees if '*' is entered
-            $sql = "SELECT * FROM ogrenci";
-        } else {
+            if($siralamaTuru === 'id'){
+                $sql = "SELECT * FROM ogrenci ORDER BY ogrenci_id ASC";
+            }else if($siralamaTuru === 'isim'){
+                $sql = "SELECT * FROM ogrenci ORDER BY isim ASC";
+            }else if($siralamaTuru === 'soyisim'){
+                $sql = "SELECT * FROM ogrenci ORDER BY soyisim ASC";
+            }else if($siralamaTuru === 'dogumTarihi'){
+                $sql = "SELECT * FROM ogrenci ORDER BY dogum_tarihi ASC";
+            }  
+
+     } else {
             // Retrieve employees based on the entered name
-            $sql = "SELECT * FROM ogrenci WHERE isim LIKE ?";
+            if($siralamaTuru === 'id'){
+                $sql = "SELECT * FROM ogrenci WHERE isim LIKE ? ORDER BY ogrenci_id ASC";
+            }else if($siralamaTuru === 'isim'){
+                $sql = "SELECT * FROM ogrenci WHERE isim LIKE ? ORDER BY isim ASC";
+            }else if($siralamaTuru === 'soyisim'){
+                $sql = "SELECT * FROM ogrenci WHERE isim LIKE ? ORDER BY soyisim ASC";
+            }else if($siralamaTuru === 'dogumTarihi'){
+                $sql = "SELECT * FROM ogrenci WHERE isim LIKE ? ORDER BY dogum_tarihi ASC";
+            }  
         }
 
         // Prepare the SQL statement
