@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
     $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
     $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
-    $tur = $db->real_escape_string($_POST['tur']);
+    $tur = $db->real_escape_string($_POST['tur']); 
     $meslek = $db->real_escape_string($_POST['meslek']);
 
     // Retrieve the entered employee name from the form
@@ -20,22 +20,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sira;
     if ($siralamaTuru === 'id') {
-        $sira = "t.calisan_id ASC";
+        $sira = "calisan_id ASC";
     } else if ($siralamaTuru === 'isim') {
-        $sira = "t.calisan_isim ASC";
+        $sira = "calisan_isim ASC";
     } else if ($siralamaTuru === 'soyisim') {
-        $sira = "t.calisan_soyisim ASC";
-    }
+        $sira = "calisan_soyisim ASC";
+    } 
 
     $filter;
     if ($filtrelemeTuru === 'isim') {
-        $filter = "t.calisan_isim";
+        $filter = "calisan_isim";
     } else if ($filtrelemeTuru === 'soyisim') {
-        $filter = "t.calisan_soyisim";
+        $filter = "calisan_soyisim";
     } else if ($filtrelemeTuru === 'cinsiyet') {
-        $filter = "t.calisan_cinsiyet";
+        $filter = "calisan_cinsiyet";
     } else if ($filtrelemeTuru === 'id') {
-        $filter = "t.calisan_id";
+        $filter = "calisan_id";
     }
 
     $vals = implode(',', $filtre);
@@ -48,50 +48,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully
-        if (!$stmt) {
+        if ($stmt) {
+            $calisanParam = "%$calisan%";
+            $stmt->bind_param("s", $calisanParam);
+        } else {
             die("Error preparing statement: " . $db->error);
         }
-
-        // Bind parameters
-        $calisanParam = "%$calisan%";
-        $stmt->bind_param("s", $calisanParam);
     }
 
     // Execute the query
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    // Get the result set
+    $stmt->execute();
     $result = $stmt->get_result();
 
-    // Check if there are rows in the result set
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        $row = $result->fetch_assoc(); // Fetch the first row to get column names
+    // Check if the execution was successful
+    
+        // Check if there are rows in the result set
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            $row = $result->fetch_assoc(); // Fetch the first row to get column names
 
-        echo "<table border='1'>";
-        echo "<tr>";
-        foreach ($row as $columnName => $columnValue) {
-            echo "<th>$columnName</th>";
-        }
-        echo "</tr>";
-
-        // Reset the result set pointer back to the beginning
-        $result->data_seek(0);
-
-        while ($row = $result->fetch_assoc()) {
+            echo "<table border='1'>";
             echo "<tr>";
-            foreach ($row as $columnValue) {
-                echo "<td>$columnValue</td>";
+            foreach ($row as $columnName => $columnValue) {
+                echo "<th>$columnName</th>";
             }
             echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "No results found";
-    }
 
+            // Reset the result set pointer back to the beginning
+            $result->data_seek(0);
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                foreach ($row as $columnValue) {
+                    echo "<td>$columnValue</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "No results found";
+        }
+
+        // Close the result set
+        $result->close();
     // Close the prepared statement and the database connection
     $stmt->close();
     $db->close();

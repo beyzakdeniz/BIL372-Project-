@@ -282,12 +282,6 @@ FROM ogrenci o
 Natural JOIN mezun m;
 
 
-CREATE table aylik_rapor AS
-SELECT * 
-FROM gider 
-WHERE (MONTH(tarih) = MONTH('$tarih') AND YEAR(tarih) = YEAR('$tarih')) OR tur = 's';
-
-
 CREATE VIEW view_aktif AS
 SELECT o.ogrenci_id,
     o.cinsiyet AS ogrenci_cinsiyet,
@@ -307,7 +301,6 @@ SELECT ders_adi, COUNT(ders_adi) AS ders_count
 FROM ders_talep
 GROUP BY ders_adi
 HAVING COUNT(ders_adi) > 0;
-
 
 select * from ders_acilacak ;
 

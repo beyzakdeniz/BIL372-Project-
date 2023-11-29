@@ -12,7 +12,7 @@
 			<li class="li"><a href="gider_ekle.html">Gider Ekle</a></li>
 			<li class="li"><a href="rapor_goruntule.html">Rapor Görüntüle</a></li>
 			<li class="li"><a href="ders_programi_goruntule.html">Ders programı Görüntüle</a></li>
-			<li class="li"><a href="ders_ekle.html">Ders Ekle</a></li>
+			<li class="li"><a href="talep_getir_back.php">Ders Ekle</a></li>
 			<li class="li"><a href="veli_goruntule.html">Velileri Görüntüle</a></li>
 			<li class="li"><a href="logout.php">Logout</a></li>
 		
