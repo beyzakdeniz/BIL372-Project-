@@ -52,8 +52,7 @@
                 $days = array("Pazartesi", "Salı", "Çarşamba",  "Perşembe", "Cuma");
                 
                 // Continue processing and displaying the results
-                while ($row = $result->fetch_assoc()) {
-                    
+                while ($row = $result->fetch_assoc()) {                    
                     
                     // Convert the digit string to an integer
                     $rowDersSaati = intval($row['ders_saati']);
@@ -70,6 +69,18 @@
                        
                     }
                     echo "<td>{$row['ders_adi']}</td>";
+                }
+
+                while ($time != 5 || $day != 5) {  
+                    if ($time < 5) {
+                        $time = $time + 1;
+                        echo "<td>         </td>";  
+                    } else if ($day < 5) {
+                        echo   "<tr> <th>$days[$day]    </th>";
+                        $day = $day + 1;
+                        $time = 1;    
+                        echo "<td>         </td>";                     
+                    }
                 }
         
                 echo "</table>";
