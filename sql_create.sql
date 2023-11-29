@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-- drop DATABASE proje;
--- CREATE DATABASE  proje;
-=======
 drop DATABASE proje;
 CREATE DATABASE  proje;
->>>>>>> 41bd300d2e84d7091a128113e9ca3187d31230c2
 use proje;
 
 CREATE TABLE IF NOT EXISTS `admin` (
@@ -208,6 +203,16 @@ LEFT JOIN ogrenci o ON v.ogrenci_id = o.ogrenci_id
 LEFT JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
 LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
 LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
+CREATE VIEW view_full AS
+SELECT *
+FROM calisan c
+JOIN fullTime f ON c.calisan_id = f.calisan_id;
+
+CREATE VIEW view_part AS
+SELECT *
+FROM calisan c
+JOIN partTime p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
 SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati

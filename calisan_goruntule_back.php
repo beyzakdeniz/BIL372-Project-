@@ -1,64 +1,96 @@
 <?php
+include "database.php";
 
-    include "database.php";
+// Check connection
+if ($db->connect_error) {
+    die("Connection failed: " . $db->connect_error);
+}
 
-    // Check connection
-    if ($db->connect_error) {
-        die("Connection failed: " . $db->connect_error);
+// Check if form is submitted using the POST method
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
+    $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
+    $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
+    $tur =$db->real_escape_string($_POST['tur']); 
+    $meslek =$db->real_escape_string($_POST['meslek']);
+
+    // Retrieve the entered employee name from the form
+    $calisan = $_POST["calisan"];
+
+    $sira;
+    if ($siralamaTuru === 'id') {
+        $sira = "calisan_id ASC";
+    } else if ($siralamaTuru === 'isim') {
+        $sira = "calisan_isim ASC";
+    } else if ($siralamaTuru === 'soyisim') {
+        $sira = "calisan_soyisim ASC";
+    } 
+
+    $filter;
+    if ($filtrelemeTuru === 'isim') {
+        $filter = "calisan_isim";
+    } else if ($filtrelemeTuru === 'soyisim') {
+        $filter = "calisan_soyisim";
+    }else if ($filtrelemeTuru === 'cinsiyet') {
+        $filter = "calisan_cinsiyet";
+    }else if ($filtrelemeTuru === 'id') {
+        $filter = "calisan_id";
     }
 
-    // Check if form is submitted using the POST method
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $vals = implode(',', $filtre);
 
-        // Retrieve the entered employee name from the form
-        $calisanAdi = $_POST["calisan"];
-
-        if ($calisanAdi === '*') {
-            // Retrieve all employees if '*' is entered
-            $sql = "SELECT * FROM calisan";
-        } else {
-            // Retrieve employees based on the entered name
-            $sql = "SELECT * FROM calisan WHERE isim LIKE ?";
-        }
-
-        // Prepare the SQL statement
+    if ($calisan === '*') {
+        $sql = "SELECT $vals FROM $tur join $meslek ORDER BY $sira";
+        $stmt = $db->prepare($sql);
+    } else {
+        $sql = "SELECT $vals FROM $tur join $meslek where $filter like ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
-        if ($calisanAdi !== '*') {
-            // Bind parameters only if a specific name is entered
-            // For '*' case, no binding is necessary
-            $calisanAdiParam = "%$calisanAdi%";
-            $stmt->bind_param("s", $calisanAdiParam);
+        // Check if the statement is prepared successfully
+        if ($stmt) {
+            $calisanParam = "%$calisan%";
+            $stmt->bind_param("s", $calisanParam);
+        } else {
+            die("Error preparing statement: " . $db->error);
         }
+    }
 
-        // Execute the query
-        $stmt->execute();
+    // Execute the query
+    $stmt->execute();
 
-        // Get the result set
-        $result = $stmt->get_result();
+    // Get the result set
+    $result = $stmt->get_result();
 
-        // Check if there are rows in the result set
-        if ($result->num_rows > 0) {
-            // Output data of each row
-           echo "<table border='1'>";
-        echo "<tr><th>ID</th><th>İsim</th><th>Soyisim</th><th>Cinsiyet</th><th>Doğum Tarihi</th></tr>";
+    // Check if there are rows in the result set
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        $row = $result->fetch_assoc(); // Fetch the first row to get column names
+
+        echo "<table border='1'>";
+        echo "<tr>";
+        foreach ($row as $columnName => $columnValue) {
+            echo "<th>$columnName</th>";
+        }
+        echo "</tr>";
+
+        // Reset the result set pointer back to the beginning
+        $result->data_seek(0);
+
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row["calisan_id"] . "</td>";
-            echo "<td>" . $row["isim"] . "</td>";
-            echo "<td>" . $row["soyisim"] . "</td>";
-            echo "<td>" . $row["cinsiyet"] . "</td>";
-            echo "<td>" . $row["dogum_tarihi"] . "</td>";
-            // Add more fields as needed
+            foreach ($row as $columnValue) {
+                echo "<td>$columnValue</td>";
+            }
             echo "</tr>";
         }
         echo "</table>";
-        } else {
-            echo "No results found";
-        }
-
-        // Close the prepared statement and the database connection
-        $stmt->close();
-        $db->close();
+    } else {
+        echo "No results found";
     }
+
+    // Close the prepared statement and the database connection
+    $stmt->close();
+    $db->close();
+}
 ?>
