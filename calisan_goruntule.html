@@ -10,6 +10,14 @@
 <body>
     <form action="calisan_goruntule_back.php" method="POST">
         
+        <label for="siralamaTuru">Sıralama ölçütü:</label>
+        <select type="text" id="siralamaTuru" name="siralamaTuru">
+            <option value="id">ID</option>
+            <option value="isim">İsim</option>
+            <option value="soyisim">Soyisim</option>
+            <option value="dogumTarihi">Doğum Tarihi</option>
+        </select><br> 
+
         <label for="calisan">Adı giriniz (Bütün çalışanlar için '*' giriniz):</label>
         <input type="text" id="calisan" name="calisan" required><br>
 

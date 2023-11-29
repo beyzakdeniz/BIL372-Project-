@@ -11,24 +11,27 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Retrieve the entered employee name from the form
-        $calisanAdi = $_POST["calisan"];
+        $veliAdi = $_POST["veli"];
 
-        if ($calisanAdi === '*') {
+        if ($veliAdi === '*') {
             // Retrieve all employees if '*' is entered
-            $sql = "SELECT * FROM calisan";
+            $sql = "SELECT v.v_id, vi.isim , vi.soyisim ,v.ogrenci_id , v.kimin_nesi , vt.tel_no, vm.mail 
+            FROM veli v JOIN veli_isim vi ON v.v_id = vi.v_id JOIN veli_mail vm ON vm.v_id = vi.v_id JOIN  veli_tel vt ON vt.v_id = vm.v_id";
         } else {
             // Retrieve employees based on the entered name
-            $sql = "SELECT * FROM calisan WHERE isim LIKE ?";
+            $sql = "SELECT v.v_id, vi.isim , vi.soyisim ,v.ogrenci_id , v.kimin_nesi , vt.tel_no, vm.mail 
+            FROM veli v JOIN veli_isim vi ON v.v_id = vi.v_id JOIN veli_mail vm ON vm.v_id = vi.v_id JOIN  veli_tel vt ON vt.v_id = vm.v_id
+            WHERE vi.isim LIKE ? ";
         }
 
         // Prepare the SQL statement
         $stmt = $db->prepare($sql);
 
-        if ($calisanAdi !== '*') {
+        if ($veliAdi !== '*') {
             // Bind parameters only if a specific name is entered
             // For '*' case, no binding is necessary
-            $calisanAdiParam = "%$calisanAdi%";
-            $stmt->bind_param("s", $calisanAdiParam);
+            $veliAdiParam = "%$veliAdi%";
+            $stmt->bind_param("s", $veliAdiParam);
         }
 
         // Execute the query
@@ -41,15 +44,16 @@
         if ($result->num_rows > 0) {
             // Output data of each row
            echo "<table border='1'>";
-        echo "<tr><th>ID</th><th>İsim</th><th>Soyisim</th><th>Cinsiyet</th><th>Doğum Tarihi</th></tr>";
+        echo "<tr><th>ID</th><th>İsim</th><th>Soyisim</th><th>Öğrenci Numarası</th><th>Yakınlık Durumu</th><th>Telefon Numarası</th><th>Maili</th>";
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row["calisan_id"] . "</td>";
+            echo "<td>" . $row["v_id"] . "</td>";
             echo "<td>" . $row["isim"] . "</td>";
             echo "<td>" . $row["soyisim"] . "</td>";
-            echo "<td>" . $row["cinsiyet"] . "</td>";
-            echo "<td>" . $row["dogum_tarihi"] . "</td>";
-            // Add more fields as needed
+            echo "<td>" . $row["ogrenci_id"] . "</td>";
+            echo "<td>" . $row["kimin_nesi"] . "</td>";
+            echo "<td>" . $row["tel_no"] . "</td>";
+            echo "<td>" . $row["mail"] . "</td>";
             echo "</tr>";
         }
         echo "</table>";

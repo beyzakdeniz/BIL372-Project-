@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTE</title>
+</head>
+
+<body>
+    <form action="ders_programi_goruntule_back.php" method="POST">
+        <h1>Ders Programı</h1>
+
+        <label for="tablo">Mesleği:</label>
+        <select type="text" id="tablo" name="tablo" onchange="checkObject()">
+            <option value="ders">Ders</option>
+            <option value="ogrenci">Öğrenci</option>
+            <option value="ogretmen">Öğretmen</option>
+            
+        </select><br>
+
+    </form><br>
+
+    <form id="dersContainer" action="ders_programi_goruntule_back.php" method="POST" style="display: block">
+        <div>
+            <label for="p_id_ders">Ders kodu giriniz (Bütün dersler için '*' giriniz):</label>
+            <input type="text" id="p_id_ders" name="p_id_ders"><br>
+            <button type="submit">Program getir</button>
+        </div>
+    </form><br>
+
+    <form id="ogrenciContainer" action="ders_programi_goruntule_back.php" method="POST" style="display: none">
+        <div>
+            <label for="p_id_ogrenci">Numara giriniz (Bütün öğrenciler için '*' giriniz):</label>
+            <input type="text" id="p_id_ogrenci" name="p_id_ogrenci"><br>
+            <button type="submit">Program getir</button>
+        </div>
+    </form><br>
+
+    <form id="ogretmenContainer" action="ders_programi_goruntule_back.php" method="POST" style="display: none">
+        <div>
+            <label for="p_id_ogretmen">Numara giriniz (Bütün çalışanlar için '*' giriniz):</label>
+            <input type="text" id="p_id_ogretmen" name="p_id_ogretmen"><br>
+            <button type="submit">Program getir</button>
+        </div>
+    </form><br>
+
+    <script>
+        function checkObject() {
+            var selectedValue = document.getElementById("tablo").value;
+
+            if (selectedValue === "ders") {
+                dersContainer.style.display = "block";
+                ogrenciContainer.style.display = "none";
+                ogretmenContainer.style.display = "none";
+            } else if (selectedValue === "ogrenci") {
+                dersContainer.style.display = "none";
+                ogrenciContainer.style.display = "block";
+                ogretmenContainer.style.display = "none";
+            } else {
+                dersContainer.style.display = "none";
+                ogrenciContainer.style.display = "none";
+                ogretmenContainer.style.display = "block";
+            }
+        }
+    </script>
+</body>
+
+</html>

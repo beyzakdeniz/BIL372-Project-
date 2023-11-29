@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS proje;
+-- drop DATABASE proje;
+-- CREATE DATABASE  proje;
 use proje;
 
 CREATE TABLE IF NOT EXISTS `admin` (
@@ -8,14 +9,11 @@ CREATE TABLE IF NOT EXISTS `admin` (
   PRIMARY KEY (`AID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `admin`
---
-
 INSERT INTO `admin` (`AID`, `ANAME`, `APASS`) VALUES
 (1, 'admin', '1234');
 
-CREATE TABLE calisan (
+
+CREATE TABLE IF NOT EXISTS calisan (
     calisan_id INT NOT NULL AUTO_INCREMENT,
     cinsiyet char NOT NULL,
     dogum_tarihi DATE NOT NULL,
@@ -83,7 +81,7 @@ CREATE TABLE IF NOT EXISTS ders_saat (
 CREATE TABLE IF NOT EXISTS ogretmen (
     ogretmen_id INT NOT null auto_increment,
     calisan_id INT not null,
-    ders_kodu CHAR(3),
+    ders_kodu CHAR(3)  not null UNIQUE,
     FOREIGN KEY (calisan_id) REFERENCES calisan(calisan_id),
     FOREIGN KEY (ders_kodu) REFERENCES ders(ders_kodu),
     primary key (ogretmen_id)
@@ -159,17 +157,18 @@ CREATE TABLE IF NOT EXISTS ders_alir (
     FOREIGN KEY (ders_kodu) REFERENCES ders(ders_kodu)
 );
 
+
+CREATE TABLE IF NOT EXISTS ders_talep (
+    ogrenci_id INT NOT NULL,
+    ders_kodu CHAR(3) NOT NULL,
+    FOREIGN KEY (ogrenci_id) REFERENCES ogrenci(ogrenci_id)
+);
 CREATE VIEW ders_acilacak AS
 SELECT d.ders_adi
 FROM ders_talep dt join ders d on dt.ders_kodu = d.ders_kodu 
 group BY(d.ders_adi)
-HAVING COUNT(d.ders_adi) > 12;
+HAVING COUNT(d.ders_adi) > 4;
 
-CREATE TABLE IF NOT EXISTS ders_talep (
-    ogrenci_id INT NOT NULL,
-    ders_adi VARCHAR(20) NOT NULL,
-    FOREIGN KEY (ogrenci_id) REFERENCES ogrenci(ogrenci_id)
-);
 
 CREATE TABLE IF NOT EXISTS maasOdenir (
     calisan_id INT NOT NULL,
@@ -180,5 +179,49 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
 );
 
 
+CREATE VIEW view_ogretmen AS
+SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati
+FROM ogretmen o
+LEFT OUTER  JOIN ders d ON o.ders_kodu = d.ders_kodu
+LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
+CREATE VIEW view_ogrenci AS
+SELECT o.ogrenci_id, d.ders_kodu, d.ders_adi, ds.ders_saati
+FROM ogrenci o
+LEFT OUTER JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
+LEFT OUTER JOIN ders d ON da.ders_kodu = d.ders_kodu
+LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
+
+CREATE VIEW view_ders AS
+SELECT d.ders_kodu, d.ders_adi, ds.ders_saati
+FROM ders d
+Left outer JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
+CREATE VIEW view_ogretmen_info AS
+SELECT o.ogretmen_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
+    c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi,
+    d.ders_kodu, d.ders_adi, ds.ders_saati
+FROM ogretmen o
+LEFT OUTER JOIN calisan c ON o.calisan_id = c.calisan_id
+LEFT OUTER JOIN ders d ON o.ders_kodu = d.ders_kodu
+LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
+CREATE VIEW view_ogrenci_info AS
+SELECT
+    o.ogrenci_id,
+    o.cinsiyet AS ogrenci_cinsiyet,
+    o.isim AS ogrenci_isim,
+    o.soyisim AS ogrenci_soyisim,
+    o.dogum_tarihi AS ogrenci_dogum_tarihi,
+    TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
+    d.ders_kodu AS ogrenci_ders_kodu,
+    d.ders_adi,
+    ds.ders_saati
+FROM
+    ogrenci o
+LEFT OUTER JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
+LEFT OUTER JOIN ders d ON da.ders_kodu = d.ders_kodu
+LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 show tables from proje;
