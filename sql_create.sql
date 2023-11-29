@@ -1,4 +1,4 @@
--- drop DATABASE proje;
+- drop DATABASE proje;
 -- CREATE DATABASE  proje;
 use proje;
 
@@ -178,6 +178,31 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
     foreign KEY (gider_id) references gider(gider_id)
 );
 
+CREATE VIEW view_veli_info AS
+SELECT
+    v.v_id as veli_id,
+    v.ogrenci_id as ogrenci_id,
+    v.kimin_nesi as kimin_nesi,
+    vt.tel_no as veli_tel,
+    vm.mail as veli_mail,
+    vi.isim AS veli_isim,
+    vi.soyisim AS veli_soyisim,
+    o.cinsiyet AS ogrenci_cinsiyet,
+    o.isim AS ogrenci_isim,
+    o.soyisim AS ogrenci_soyisim,
+    TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
+    d.ders_kodu AS ogrenci_ders_kodu,
+    d.ders_adi,
+    ds.ders_saati
+FROM
+    veli v
+LEFT JOIN veli_tel vt ON v.v_id = vt.v_id
+LEFT JOIN veli_mail vm ON v.v_id = vm.v_id
+LEFT JOIN veli_isim vi ON v.v_id = vi.v_id
+LEFT JOIN ogrenci o ON v.ogrenci_id = o.ogrenci_id
+LEFT JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
+LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
+LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_ogretmen AS
 SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati
@@ -192,6 +217,23 @@ LEFT OUTER JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
 LEFT OUTER JOIN ders d ON da.ders_kodu = d.ders_kodu
 LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
+CREATE VIEW view_calisan_info AS
+SELECT c.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan_soyisim, 
+    c.cinsiyet AS calisan_cinsiyet, c.dogum_tarihi AS calisan_dogum_tarihi
+FROM calisan c
+JOIN calisan_mail cm ON c.calisan_id = cm.calisan_id
+JOIN calisan_telefon ct ON cm.calisan_id = ct.calisan_id
+JOIN calisan_tc ctc ON ctc.calisan_id = ct.calisan_id;
+
+CREATE OR REPLACE VIEW fullTime_calisan_view AS
+SELECT f.calisan_id, c.cinsiyet, c.dogum_tarihi, c.isim, c.soyisim
+FROM fullTime f
+JOIN calisan c ON f.calisan_id = c.calisan_id;
+
+CREATE OR REPLACE VIEW partTime_calisan_view AS
+SELECT p.calisan_id, c.cinsiyet, c.dogum_tarihi, c.isim, c.soyisim
+FROM partTime p
+JOIN calisan c ON p.calisan_id = c.calisan_id;
 
 CREATE VIEW view_ders AS
 SELECT d.ders_kodu, d.ders_adi, ds.ders_saati
@@ -244,8 +286,9 @@ SELECT o.ogrenci_id,
     o.soyisim AS ogrenci_soyisim,
     o.dogum_tarihi AS ogrenci_dogum_tarihi,
     TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
-    a.musaitlik_id
+    d.ders_kodu AS ders_kodu
 FROM ogrenci o
-Natural JOIN aktif a; 
+Natural JOIN aktif a
+join ders_alir d; 
 
 show tables from proje;

@@ -1,68 +1,97 @@
 <?php
+include "database.php";
 
-    include "database.php";
+// Check connection
+if ($db->connect_error) {
+    die("Connection failed: " . $db->connect_error);
+}
 
-    // Check connection
-    if ($db->connect_error) {
-        die("Connection failed: " . $db->connect_error);
+// Check if form is submitted using the POST method
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
+    $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
+    $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
+
+    // Retrieve the entered employee name from the form
+    $ogrenci = $_POST["ogrenci"];
+
+    $sira;
+    if ($siralamaTuru === 'veli_id') {
+        $sira = "veli_id ASC";
+    } else if ($siralamaTuru === 'veli_isim') {
+        $sira = "veli_isim ASC";
+    } else if ($siralamaTuru === 'veli_soyisim') {
+        $sira = "veli_soyisim ASC";
+    } 
+
+    $filter;
+    if ($filtrelemeTuru === 'isim') {
+        $filter = "veli_isim";
+    } else if ($filtrelemeTuru === 'soyisim') {
+        $filter = "veli_soyisim";
+    }else if ($filtrelemeTuru === 'yas') {
+        $filter = "ogrenci_age";
+    }else if ($filtrelemeTuru === 'dersKodu') {
+        $filter = "ogrenci_ders_kodu";
+    }else if ($filtrelemeTuru === 'kimin_nesi') {
+        $filter = "kimin_nesi";
     }
 
-    // Check if form is submitted using the POST method
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        // Retrieve the entered employee name from the form
-        $veliAdi = $_POST["veli"];
+    $vals = implode(',', $filtre);
 
-        if ($veliAdi === '*') {
-            // Retrieve all employees if '*' is entered
-            $sql = "SELECT v.v_id, vi.isim , vi.soyisim ,v.ogrenci_id , v.kimin_nesi , vt.tel_no, vm.mail 
-            FROM veli v JOIN veli_isim vi ON v.v_id = vi.v_id JOIN veli_mail vm ON vm.v_id = vi.v_id JOIN  veli_tel vt ON vt.v_id = vm.v_id";
-        } else {
-            // Retrieve employees based on the entered name
-            $sql = "SELECT v.v_id, vi.isim , vi.soyisim ,v.ogrenci_id , v.kimin_nesi , vt.tel_no, vm.mail 
-            FROM veli v JOIN veli_isim vi ON v.v_id = vi.v_id JOIN veli_mail vm ON vm.v_id = vi.v_id JOIN  veli_tel vt ON vt.v_id = vm.v_id
-            WHERE vi.isim LIKE ? ";
-        }
-
-        // Prepare the SQL statement
+    if ($veli === '*') {
+        $sql = "SELECT $vals FROM view_veli_info ORDER BY $sira";
+        $stmt = $db->prepare($sql);
+    } else {
+        $sql = "SELECT $vals FROM view_veli_info where $filter like ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
-        if ($veliAdi !== '*') {
-            // Bind parameters only if a specific name is entered
-            // For '*' case, no binding is necessary
-            $veliAdiParam = "%$veliAdi%";
-            $stmt->bind_param("s", $veliAdiParam);
+        // Check if the statement is prepared successfully
+        if ($stmt) {
+            $veliParam = "%$veli%";
+            $stmt->bind_param("s", $veliParam);
+        } else {
+            die("Error preparing statement: " . $db->error);
         }
+    }
 
-        // Execute the query
-        $stmt->execute();
+    // Execute the query
+    $stmt->execute();
 
-        // Get the result set
-        $result = $stmt->get_result();
+    // Get the result set
+    $result = $stmt->get_result();
 
-        // Check if there are rows in the result set
-        if ($result->num_rows > 0) {
-            // Output data of each row
-           echo "<table border='1'>";
-        echo "<tr><th>ID</th><th>İsim</th><th>Soyisim</th><th>Öğrenci Numarası</th><th>Yakınlık Durumu</th><th>Telefon Numarası</th><th>Maili</th>";
+    // Check if there are rows in the result set
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        $row = $result->fetch_assoc(); // Fetch the first row to get column names
+
+        echo "<table border='1'>";
+        echo "<tr>";
+        foreach ($row as $columnName => $columnValue) {
+            echo "<th>$columnName</th>";
+        }
+        echo "</tr>";
+
+        // Reset the result set pointer back to the beginning
+        $result->data_seek(0);
+
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row["v_id"] . "</td>";
-            echo "<td>" . $row["isim"] . "</td>";
-            echo "<td>" . $row["soyisim"] . "</td>";
-            echo "<td>" . $row["ogrenci_id"] . "</td>";
-            echo "<td>" . $row["kimin_nesi"] . "</td>";
-            echo "<td>" . $row["tel_no"] . "</td>";
-            echo "<td>" . $row["mail"] . "</td>";
+            foreach ($row as $columnValue) {
+                echo "<td>$columnValue</td>";
+            }
             echo "</tr>";
         }
         echo "</table>";
-        } else {
-            echo "No results found";
-        }
-
-        // Close the prepared statement and the database connection
-        $stmt->close();
-        $db->close();
+    } else {
+        echo "No results found";
     }
+
+    // Close the prepared statement and the database connection
+    $stmt->close();
+    $db->close();
+}
 ?>
