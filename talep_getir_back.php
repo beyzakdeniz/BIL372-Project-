@@ -27,7 +27,7 @@
         
         $result = $db->query($sql);
         if ($result) {
-            echo "<form method= post  action= ders_ekle.php  method=POST>";
+            echo "<form method= post  action= ders_ekle.php>";
             echo "<h1>Talep Edilen Dersler</h1>";
             if ($result->num_rows > 0) {
                 echo "<table><tr>";
@@ -36,19 +36,23 @@
                 echo "<table border='1'>";
                 echo "<th> Ders Adı <th> Talep Sayısı <th> Dersi Ekle"   ;
                 echo " <tr>";
-                        
+                
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
                     echo "<td>" . $row['ders_adi'] . "</td>";
                     echo "<td>" . $row['ders_count'] . "</td>";
                     echo "<td>";
-                    echo "<input type='hidden' name='selectedDers' value='" . $row['ders_adi'] . "'>";
-                    echo "<button type='submit' name='submitButton'>Ekle</button>";
+
                     echo "</td>";
                     echo "</tr>";
                 };
             
                 echo "</table>";
+                echo "<form action=ders_ekle.php method=post>
+                <label for=inputField>Eklenecek ders adı:</label>
+                <input type=text id=inputField name=inputValue>
+                <button type=submit>Submit</button>
+            </form>";
             } else {
                 echo "Yeterli talebe ulaşan ders yok.";
             }
