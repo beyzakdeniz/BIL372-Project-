@@ -56,41 +56,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Execute the query
-    $stmt->execute();
+   // Execute the query
+   $stmt->execute();
 
-    // Get the result set
-    $result = $stmt->get_result();
+   // Get the result set
+   $result = $stmt->get_result();
 
-    // Check if there are rows in the result set
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        $row = $result->fetch_assoc(); // Fetch the first row to get column names
+   // Check if there are rows in the result set
+   if ($result->num_rows > 0) {
+       // Output data of each row
+       echo "<table border='1'>";
+       echo "<tr>";
+       foreach ($result->fetch_assoc() as $columnName => $columnValue) {
+           echo "<th>$columnName</th>";
+       }
+       echo "</tr>";
 
-        echo "<table border='1'>";
-        echo "<tr>";
-        foreach ($row as $columnName => $columnValue) {
-            echo "<th>$columnName</th>";
-        }
-        echo "</tr>";
+       // Reset the result set pointer back to the beginning
+       $result->data_seek(0);
 
-        // Reset the result set pointer back to the beginning
-        $result->data_seek(0);
+       while ($row = $result->fetch_assoc()) {
+           echo "<tr>";
+           foreach ($row as $columnValue) {
+               echo "<td>$columnValue</td>";
+           }
+           echo "</tr>";
+       }
+       echo "</table>";
+   } else {
+       echo "No results found";
+   }
 
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            foreach ($row as $columnValue) {
-                echo "<td>$columnValue</td>";
-            }
-            echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "No results found";
-    }
-
-    // Close the prepared statement and the database connection
-    $stmt->close();
-    $db->close();
+   // Close the prepared statement and the database connection
+   $stmt->close();
+   $db->close();
 }
 ?>
