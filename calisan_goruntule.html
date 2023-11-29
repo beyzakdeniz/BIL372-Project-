@@ -11,11 +11,28 @@
     <form action="calisan_goruntule_back.php" method="POST">
         
         <div style="display: flex; align-items: center;">
-            <label for="ogretmen" style="margin-right: 10px;">Öğretmen</label>
-            <input type="checkbox" id="mezun" name="tur" value="view_ogretmen_info" onchange="addCheckboxForOgretmen()">
+            <label for="fullTime" style="margin-right: 10px;">Tam Zamanlı</label>
+            <input type="checkbox" id="fullTime" name="tur" value="view_full">
+
+            <label for="partTime" style="margin-right: 10px;">Yarı Zamanlı</label>
+            <input type="checkbox" id="partTime" name="tur" value="view_part">
 
             <label for="tum" style="margin-right: 10px;">Tümü</label>
             <input type="checkbox" id="tum" name="tur" value="view_calisan_info">
+        </div><br>
+        
+        <div style="display: flex; align-items: center;">
+            <label for="ogretmen" style="margin-right: 10px;">Öğretmen</label>
+            <input type="checkbox" id="ogretmen" name="meslek" value="view_ogretmen" onchange="addCheckboxForOgretmen()">
+
+            <label for="ogretmen" style="margin-right: 10px;">Temizlik Personeli</label>
+            <input type="checkbox" id="temizlik" name="meslek" value="temizlik">
+
+            <label for="ogretmen" style="margin-right: 10px;">İdari</label>
+            <input type="checkbox" id="idari" name="meslek" value="idari">
+
+            <label for="tum" style="margin-right: 10px;">Tümü</label>
+            <input type="checkbox" id="tum" name="meslek" value="view_calisan_info">
         </div><br>
 
         <label for="siralamaTuru">Sıralama ölçütü:</label>
@@ -30,29 +47,30 @@
             <option value="isim">İsim</option>
             <option value="soyisim">Soyisim</option>
             <option value="cinsiyet">Cinsiyet</option>
+            <option value="id">Id</option>
         </select><br><br>
         
         <label>Filtre:</label>
         <div  id="filtre" style="display: flex; align-items: center;">
             <label for="id" style="margin-right: 10px;">ID</label>
-            <input type="checkbox" id="id" name="filtre[]" value="ogrenci_id">
+            <input type="checkbox" id="id" name="filtre[]" value="calisan_id">
 
             <label for="isim" style="margin-right: 10px;">İsim</label>
-            <input type="checkbox" id="isim" name="filtre[]" value="ogrenci_isim">
+            <input type="checkbox" id="isim" name="filtre[]" value="calisan_isim">
 
             <label for="soyisim" style="margin-right: 10px; margin-left: 10px;">Soyisim</label>
-            <input type="checkbox" id="soyisim" name="filtre[]" value="ogrenci_soyisim">
+            <input type="checkbox" id="soyisim" name="filtre[]" value="calisan_soyisim">
 
             <label for="cinsiyet" style="margin-right: 10px; margin-left: 10px;">Cinsiyet</label>
-            <input type="checkbox" id="cinsiyet" name="filtre[]" value="ogrenci_cinsiyet">
+            <input type="checkbox" id="cinsiyet" name="filtre[]" value="calisan_cinsiyet">
 
-            <label for="yas" style="margin-right: 10px; margin-left: 10px;">Yaş</label>
-            <input type="checkbox" id="yas" name="filtre[]" value="ogrenci_age">
+            <label for="dogumTarihi" style="margin-right: 10px; margin-left: 10px;">Doğum Tarihi</label>
+            <input type="checkbox" id="dogumTarihi" name="filtre[]" value="calisan_dogum_tarihi">
 
         </div>
 
-        <label for="ogrenci">Bilgiyi giriniz (Bütün için '*' giriniz):</label>
-        <input type="text" id="ogrenci" name="ogrenci" required><br>
+        <label for="calisan">Bilgiyi giriniz (Bütün için '*' giriniz):</label>
+        <input type="text" id="calisan" name="calisan" required><br>
 
         <button type="submit">Çalışanı getir</button>
     </form>
@@ -66,7 +84,7 @@
                 checkbox.type = 'checkbox';
                 checkbox.id = 'dersKodu';
                 checkbox.name = 'filtre[]';
-                checkbox.value = 'd.ders_kodu';
+                checkbox.value = 'ders_kodu';
     
                 const filtreDiv = document.getElementById('filtre');
                 filtreDiv.appendChild(checkboxLabel);

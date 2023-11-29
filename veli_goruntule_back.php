@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
 
     // Retrieve the entered employee name from the form
-    $ogrenci = $_POST["ogrenci"];
+    $veli = $_POST["veli"];
 
     $sira;
     if ($siralamaTuru === 'veli_id') {

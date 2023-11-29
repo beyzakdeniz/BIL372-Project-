@@ -39,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $filter = "ogrenci_ders_kodu";
     }else if ($filtrelemeTuru === 'cinsiyet') {
         $filter = "ogrenci_cinsiyet";
+    }else if ($filtrelemeTuru === 'id') {
+        $filter = "ogrenci_id";
     }
 
     $vals = implode(',', $filtre);
