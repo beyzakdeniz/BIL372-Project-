@@ -176,6 +176,16 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
     foreign KEY (gider_id) references gider(gider_id)
 );
 
+CREATE VIEW view_calisan_info AS
+SELECT
+    calisan_id,
+    cinsiyet AS calisan_cinsiyet,
+    dogum_tarihi AS calisan_dogum_tarihi,
+    isim AS calisan_isim,
+    soyisim AS calisan_soyisim
+FROM
+    calisan;
+
 CREATE VIEW view_veli_info AS
 SELECT
     v.v_id as veli_id,
@@ -203,14 +213,14 @@ LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
 LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_full AS
-SELECT *
-FROM calisan c
-JOIN fullTime f ON c.calisan_id = f.calisan_id;
+SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
+    isim AS calisan_isim, soyisim AS calisan_soyisimFROM calisan c
+FROM calisan c JOIN fullTime f ON c.calisan_id = f.calisan_id;
 
 CREATE VIEW view_part AS
-SELECT *
-FROM calisan c
-JOIN partTime p ON c.calisan_id = p.calisan_id;
+SELECT calisan_id, cinsiyet AS calisan_cinsiyet, dogum_tarihi AS calisan_dogum_tarihi,
+    isim AS calisan_isim, soyisim AS calisan_soyisimFROM calisan 
+FROM calisan c JOIN partTime p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
 SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati
