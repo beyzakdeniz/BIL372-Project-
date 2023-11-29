@@ -93,25 +93,10 @@
             $sql = "INSERT INTO calisan_telefon (calisan_id, telefon) VALUES ('$calisan_id', '$telefonNo')";
             $db->query($sql);
 
-            /*
+            
             $sql = "INSERT INTO gider (tarih, tur, harcama_turu) VALUES ('$today', 's', 'maaş')";
             $db->query($sql);
-            */
-
-            $sql = "CREATE TRIGGER gidere_maas_ekle
-                    BEFORE INSERT ON maasOdenir
-                    FOR EACH ROW
-                    BEGIN
-                        DECLARE maas_value INT;
-                    
-                        SELECT maas INTO maas_value
-                        FROM new; -- 'new' refers to the newly inserted row
-                    
-                        INSERT INTO gider (tarih, tur, harcama_turu, miktar)
-                        VALUES (NOW(), 's', 'maaş', maas_value);
-                    END;";
-            $db->query($sql);
-
+    
 
             // Eklenen giderin ID'sini al
             $gider_id = $db->insert_id;
@@ -119,8 +104,6 @@
             // Şimdi maasOdenir tablosuna ekle
             $sql = "INSERT INTO maasOdenir (calisan_id, gider_id, maas) VALUES ('$calisan_id', '$gider_id', '$maas')";
             $db->query($sql);
-
-
 
             echo "Staff added successfully!";
         } else {
