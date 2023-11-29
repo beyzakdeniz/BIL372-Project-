@@ -26,7 +26,7 @@
                 // Adjust table headers based on the selected view
                 echo "<table border='1'>";
                 echo "<th> Öğrenci ID <th>Cinsiyet<th>İsim <th>Soyisim
-                <th>Dogum Tarihi<th>Ders Kodu<th>Ders Adı<th>Ders Saati"    ;
+                <th>Doğum Tarihi<th>Ders Kodu<th>Ders Adı<th>Ders Saati"    ;
                 echo" <tr>";
                         
                 
