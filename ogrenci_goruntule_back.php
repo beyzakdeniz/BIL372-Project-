@@ -41,10 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vals = implode(',', $filtre);
 
     if ($ogrenci === '*') {
-        $sql = "SELECT * FROM view_ogrenci_info ORDER BY $sira";
+        $sql = "SELECT $vals FROM view_ogrenci_info ORDER BY $sira";
         $stmt = $db->prepare($sql);
     } else {
-        $sql = "SELECT * FROM view_ogrenci_info where $filter like ? ORDER BY $sira";
+        $sql = "SELECT $vals FROM view_ogrenci_info where $filter like ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully
@@ -65,9 +65,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if there are rows in the result set
     if ($result->num_rows > 0) {
         // Output data of each row
+        $row = $result->fetch_assoc(); // Fetch the first row to get column names
+
         echo "<table border='1'>";
-        echo "<tr><th>ID</th><th>İsim</th><th>Soyisim</th><th>Cinsiyet</th><th>Yaş</th></tr>";
+        echo "<tr>";
+        foreach ($row as $columnName => $columnValue) {
+            echo "<th>$columnName</th>";
+        }
+        echo "</tr>";
+
+        // Reset the result set pointer back to the beginning
+        $result->data_seek(0);
+
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row["ogrenci_id"] . "</td>";
-            echo "<td>" . $row["ogrenci_isim
+            foreach ($row as $columnValue) {
+                echo "<td>$columnValue</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No results found";
+    }
+
+    // Close the prepared statement and the database connection
+    $stmt->close();
+    $db->close();
+}
+?>
