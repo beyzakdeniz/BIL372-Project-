@@ -15,7 +15,7 @@
 
     if ($raporTuru == 'aylik') {
         // Aylık rapor sorgusu
-        $query = "SELECT * from view_aylik_rapor";
+        $query = "SELECT * from gider where (MONTH(tarih) = MONTH('$tarih') AND YEAR(tarih) = YEAR('$tarih') AND tur = 'e' ) OR tur = 's'";
         // Sorguyu çalıştır
         $results = $db->query($query);
     } elseif ($raporTuru == 'haftalik') {
