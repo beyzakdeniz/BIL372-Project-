@@ -12,55 +12,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
     $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
     $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
-    $tur = $db->real_escape_string($_POST['tur']);
-    $meslek = $db->real_escape_string($_POST['meslek']);
+    $tur =$db->real_escape_string($_POST['tur']); 
+    $meslek =$db->real_escape_string($_POST['meslek']);
 
     // Retrieve the entered employee name from the form
     $calisan = $_POST["calisan"];
 
     $sira;
     if ($siralamaTuru === 'id') {
-        $sira = "t.calisan_id ASC";
+        $sira = "calisan_id ASC";
     } else if ($siralamaTuru === 'isim') {
-        $sira = "t.calisan_isim ASC";
+        $sira = "calisan_isim ASC";
     } else if ($siralamaTuru === 'soyisim') {
-        $sira = "t.calisan_soyisim ASC";
-    }
+        $sira = "calisan_soyisim ASC";
+    } 
 
     $filter;
     if ($filtrelemeTuru === 'isim') {
-        $filter = "t.calisan_isim";
+        $filter = "calisan_isim";
     } else if ($filtrelemeTuru === 'soyisim') {
-        $filter = "t.calisan_soyisim";
-    } else if ($filtrelemeTuru === 'cinsiyet') {
-        $filter = "t.calisan_cinsiyet";
-    } else if ($filtrelemeTuru === 'id') {
-        $filter = "t.calisan_id";
+        $filter = "calisan_soyisim";
+    }else if ($filtrelemeTuru === 'cinsiyet') {
+        $filter = "calisan_cinsiyet";
+    }else if ($filtrelemeTuru === 'id') {
+        $filter = "calisan_id";
     }
 
     $vals = implode(',', $filtre);
 
     if ($calisan === '*') {
-        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur JOIN $meslek ON calisan_id = calisan_id ORDER BY $sira";
         $stmt = $db->prepare($sql);
     } else {
-        $sql = "SELECT $vals FROM $tur as t JOIN $meslek as m ON t.calisan_id = m.calisan_id WHERE $filter LIKE ? ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur JOIN $meslek ON calisan_id = calisan_id where $filter like ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully
-        if (!$stmt) {
+        if ($stmt) {
+            $calisanParam = "%$calisan%";
+            $stmt->bind_param("s", $calisanParam);
+        } else {
             die("Error preparing statement: " . $db->error);
         }
-
-        // Bind parameters
-        $calisanParam = "%$calisan%";
-        $stmt->bind_param("s", $calisanParam);
     }
 
     // Execute the query
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
+    $stmt->execute();
 
     // Get the result set
     $result = $stmt->get_result();
