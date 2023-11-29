@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS gider (
     tarih DATE NOT NULL,
     tur char NOT NULL,
     harcama_turu VARCHAR(20) NOT null,
-    miktar int not null
+    miktar int 
 );
 
 CREATE TABLE IF NOT EXISTS ders_alir (
