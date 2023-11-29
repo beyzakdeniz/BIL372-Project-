@@ -205,7 +205,7 @@ SELECT o.ogretmen_id, o.calisan_id, c.isim AS calisan_isim, c.soyisim AS calisan
 FROM ogretmen o
 LEFT OUTER JOIN calisan c ON o.calisan_id = c.calisan_id
 LEFT OUTER JOIN ders d ON o.ders_kodu = d.ders_kodu
-JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_ogrenci_info AS
 SELECT
@@ -220,9 +220,9 @@ SELECT
     ds.ders_saati
 FROM
     ogrenci o
-JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
+LEFT OUTER JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
 LEFT OUTER JOIN ders d ON da.ders_kodu = d.ders_kodu
-JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 
 CREATE VIEW view_mezun AS
@@ -300,3 +300,11 @@ INSERT INTO idari (calisan_id) VALUES
 (5),
 (8),
 (10);
+
+INSERT INTO `ders_saat` (`ders_kodu`, `ders_saati`) VALUES
+('Bio', '110'),
+('Mat', '212');
+
+INSERT INTO `ders_alir` (`ogrenci_id`, `ders_kodu`) VALUES
+(1, 'Fiz'),
+(7, 'Mat');
