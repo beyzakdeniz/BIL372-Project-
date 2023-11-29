@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $siralamaTuru = $db->real_escape_string($_POST['siralamaTuru']);
     $filtrelemeTuru = $db->real_escape_string($_POST['filtrelemeTuru']);
     $filtre = isset($_POST["filtre"]) ? $_POST["filtre"] : array();
+    $tur =$db->real_escape_string($_POST['tur']);
 
     // Retrieve the entered employee name from the form
     $ogrenci = $_POST["ogrenci"];
@@ -36,15 +37,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $filter = "ogrenci_age";
     } else if ($filtrelemeTuru === 'dersKodu') {
         $filter = "ogrenci_ders_kodu";
+    }else if ($filtrelemeTuru === 'cinsiyet') {
+        $filter = "ogrenci_cinsiyet";
+    }else if ($filtrelemeTuru === 'id') {
+        $filter = "ogrenci_id";
     }
 
     $vals = implode(',', $filtre);
 
     if ($ogrenci === '*') {
-        $sql = "SELECT $vals FROM view_ogrenci_info ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur ORDER BY $sira";
         $stmt = $db->prepare($sql);
     } else {
-        $sql = "SELECT $vals FROM view_ogrenci_info where $filter like ? ORDER BY $sira";
+        $sql = "SELECT $vals FROM $tur where $filter like ? ORDER BY $sira";
         $stmt = $db->prepare($sql);
 
         // Check if the statement is prepared successfully

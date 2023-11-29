@@ -1,5 +1,5 @@
--- drop DATABASE proje;
--- CREATE DATABASE  proje;
+drop DATABASE proje;
+CREATE DATABASE  proje;
 use proje;
 
 CREATE TABLE IF NOT EXISTS `admin` (
@@ -147,7 +147,8 @@ CREATE TABLE IF NOT EXISTS gider (
     gider_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     tarih DATE NOT NULL,
     tur char NOT NULL,
-    harcama_turu VARCHAR(20) NOT NULL
+    harcama_turu VARCHAR(20) NOT null,
+    miktar int not null
 );
 
 CREATE TABLE IF NOT EXISTS ders_alir (
@@ -160,14 +161,11 @@ CREATE TABLE IF NOT EXISTS ders_alir (
 
 CREATE TABLE IF NOT EXISTS ders_talep (
     ogrenci_id INT NOT NULL,
-    ders_kodu CHAR(3) NOT NULL,
+    ders_adi VARCHAR(15),
     FOREIGN KEY (ogrenci_id) REFERENCES ogrenci(ogrenci_id)
 );
-CREATE VIEW ders_acilacak AS
-SELECT d.ders_adi
-FROM ders_talep dt join ders d on dt.ders_kodu = d.ders_kodu 
-group BY(d.ders_adi)
-HAVING COUNT(d.ders_adi) > 4;
+
+
 
 
 CREATE TABLE IF NOT EXISTS maasOdenir (
@@ -178,19 +176,54 @@ CREATE TABLE IF NOT EXISTS maasOdenir (
     foreign KEY (gider_id) references gider(gider_id)
 );
 
+CREATE VIEW view_veli_info AS
+SELECT
+    v.v_id as veli_id,
+    v.ogrenci_id as ogrenci_id,
+    v.kimin_nesi as kimin_nesi,
+    vt.tel_no as veli_tel,
+    vm.mail as veli_mail,
+    vi.isim AS veli_isim,
+    vi.soyisim AS veli_soyisim,
+    o.cinsiyet AS ogrenci_cinsiyet,
+    o.isim AS ogrenci_isim,
+    o.soyisim AS ogrenci_soyisim,
+    TIMESTAMPDIFF(YEAR, o.dogum_tarihi, CURDATE()) AS ogrenci_age,
+    d.ders_kodu AS ogrenci_ders_kodu,
+    d.ders_adi,
+    ds.ders_saati
+FROM
+    veli v
+LEFT JOIN veli_tel vt ON v.v_id = vt.v_id
+LEFT JOIN veli_mail vm ON v.v_id = vm.v_id
+LEFT JOIN veli_isim vi ON v.v_id = vi.v_id
+LEFT JOIN ogrenci o ON v.ogrenci_id = o.ogrenci_id
+LEFT JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
+LEFT JOIN ders d ON da.ders_kodu = d.ders_kodu
+LEFT JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+
+CREATE VIEW view_full AS
+SELECT *
+FROM calisan c
+JOIN fullTime f ON c.calisan_id = f.calisan_id;
+
+CREATE VIEW view_part AS
+SELECT *
+FROM calisan c
+JOIN partTime p ON c.calisan_id = p.calisan_id;
 
 CREATE VIEW view_ogretmen AS
 SELECT o.calisan_id, d.ders_kodu, d.ders_adi, ds.ders_saati
 FROM ogretmen o
-LEFT OUTER  JOIN ders d ON o.ders_kodu = d.ders_kodu
-LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+JOIN ders d ON o.ders_kodu = d.ders_kodu
+JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 CREATE VIEW view_ogrenci AS
 SELECT o.ogrenci_id, d.ders_kodu, d.ders_adi, ds.ders_saati
 FROM ogrenci o
-LEFT OUTER JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
-LEFT OUTER JOIN ders d ON da.ders_kodu = d.ders_kodu
-LEFT OUTER JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
+JOIN ders_alir da ON o.ogrenci_id = da.ogrenci_id
+JOIN ders d ON da.ders_kodu = d.ders_kodu
+JOIN ders_saat ds ON d.ders_kodu = ds.ders_kodu;
 
 
 CREATE VIEW view_ders AS
@@ -249,4 +282,74 @@ FROM ogrenci o
 Natural JOIN aktif a
 join ders_alir d; 
 
-show tables from proje;
+
+
+CREATE VIEW ders_acilacak AS
+SELECT ders_adi, COUNT(ders_adi) AS ders_count
+FROM ders_talep
+GROUP BY ders_adi
+HAVING COUNT(ders_adi) > 0;
+
+
+select * from ders_acilacak ;
+
+INSERT INTO ders (ders_kodu, ders_adi)
+VALUES 
+    ('Mat', 'Matematik'),
+    ('Fiz', 'Fizik'),
+    ('Kim ', 'Kimya'),
+    ('Rob', 'Robotik'),
+    ('Bio', 'Biyoloji');
+
+INSERT INTO ogrenci (cinsiyet, isim, soyisim, dogum_tarihi) VALUES
+('E', 'John', 'Doe', '2000-01-05'),
+('K', 'Jane', 'Smith', '1999-04-12'),
+('E', 'Michael', 'Johnson', '2001-07-20'),
+('K', 'Emily', 'Williams', '2000-11-15'),
+('E', 'Daniel', 'Brown', '1999-02-28'),
+('K', 'Olivia', 'Jones', '2001-09-08'),
+('E', 'William', 'Davis', '2000-06-03'),
+('K', 'Ella', 'Miller', '1999-12-10'),
+('E', 'Matthew', 'Moore', '2001-03-25'),
+('K', 'Sophia', 'Anderson', '2000-08-18');
+
+INSERT INTO calisan (cinsiyet, dogum_tarihi, isim, soyisim) VALUES
+('E', '1985-03-10', 'Ahmet', 'Yılmaz'),
+('K', '1990-07-22', 'Ayşe', 'Kaya'),
+('E', '1988-11-05', 'Mehmet', 'Demir'),
+('K', '1995-04-15', 'Fatma', 'Öztürk'),
+('E', '1987-09-28', 'Mustafa', 'Arslan'),
+('K', '1993-01-12', 'Zeynep', 'Çelik'),
+('E', '1986-06-20', 'Ali', 'Şahin'),
+('K', '1991-12-08', 'Sema', 'Koç'),
+('E', '1989-02-18', 'Burak', 'Turan'),
+('K', '1994-08-03', 'Esra', 'Aksoy');
+
+INSERT INTO ogretmen (calisan_id, ders_kodu) VALUES
+(1, 'MAT'),
+(4, 'BIO'),
+(7, 'kim');
+
+INSERT INTO temizlik (calisan_id) VALUES
+(3),
+(6),
+(9);
+
+INSERT INTO idari (calisan_id) VALUES
+(2),
+(5),
+(8),
+(10);
+
+INSERT INTO `ders_saat` (`ders_kodu`, `ders_saati`) VALUES
+('Bio', '110'),
+('Mat', '212');
+
+INSERT INTO `ders_alir` (`ogrenci_id`, `ders_kodu`) VALUES
+(1, 'Fiz'),
+(7, 'Mat');
+
+INSERT INTO `ders_talep` (`ogrenci_id`, `ders_adi`) VALUES
+(1, 'internet'),
+(7, 'veri');
+

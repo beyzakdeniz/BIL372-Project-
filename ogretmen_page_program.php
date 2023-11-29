@@ -13,7 +13,7 @@
         die("Connection failed: " . $db->connect_error);
     }
 
-    $sql = "SELECT * FROM view_ogretmen WHERE ders_kodu = $ogretmen_id ORDER BY ders_saati";
+    $sql = "SELECT * FROM view_ogretmen WHERE ogretmen_id = $ogretmen_id ORDER BY ders_saati";
 
     $result = $db->query($sql);
 

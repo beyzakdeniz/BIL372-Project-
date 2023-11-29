@@ -39,7 +39,7 @@
     echo "<td>" . $row['ogrenci_isim'] . "</td>";
     echo "<td>" . $row['ogrenci_soyisim'] . "</td>";
     echo "<td>" . $row['ogrenci_dogum_tarihi'] . "</td>";
-    echo "<td>" . $row['ders_kodu'] . "</td>";
+    echo "<td>" . $row['ogrenci_ders_kodu'] . "</td>";
     echo "<td>" . $row['ders_adi'] . "</td>";
     echo "<td>" . $row['ders_saati'] . "</td>";
     echo "</tr>";
